@@ -9,18 +9,18 @@ This project allows for a quick illustration of how a *balungan* (melody) might 
 
 ## Features
 The program asks for the user to input a *balungan* and for various other details such as the *laras/pathet* (tuning system/mode), and outputs a set of parts that represent what the main bulk of instruments of the Javanese Gamelan would play:
-+Bonang
-+Peking
-+Saron
-+Kenong
-+Kempul
++ Bonang
++ Peking
++ Saron
++ Kenong
++ Kempul
 
 Future features are in development, such as:
-+Using a limited number of kempul for smaller gamelans
-+Using different *irama*
-+Transposing the user-defined *balungan* into different a different *laras* and *pathet*
-+Allowing the user to define which parts they would like to recieve
-+Moving from a console application to a web application
++ Using a limited number of kempul for smaller gamelans
++ Using different *irama*
++ Transposing the user-defined *balungan* into different a different *laras* and *pathet*
++ Allowing the user to define which parts they would like to recieve
++ Moving from a console application to a web application
 
 ## How to use
 *(under construction)*
