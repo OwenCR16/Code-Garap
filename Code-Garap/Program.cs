@@ -302,7 +302,7 @@ if (userIrama == "tanggung")
                         {
                             if (generateCounter >= 4)
                             {
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
+                                /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[i];
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[generateCounter - 1];
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[i];
@@ -310,13 +310,17 @@ if (userIrama == "tanggung")
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[i];
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[generateCounter - 1];
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[i];
+                                */
+                                GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[i], userInputArr[generateCounter - 1]);
                             }
                             else if (generateCounter == 2)
                             {
-                                bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
+                                /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
                                 bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[i];
                                 bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
                                 bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[i];
+                                */
+                                GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[i], userInputArr[generateCounter - 1]);
                             }
 
                             foundNonZero = true;
@@ -333,7 +337,7 @@ if (userIrama == "tanggung")
                     {
                         if (generateCounter >= 4)
                         {
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
+                            /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
                             bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[noteCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[generateCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[noteCounter - 1];
@@ -341,13 +345,17 @@ if (userIrama == "tanggung")
                             bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[noteCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[generateCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[noteCounter - 1];
+                            */
+                            GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
                         }
                         else if (generateCounter == 2)
                         {
-                            bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
+                            /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
                             bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[noteCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[noteCounter - 1];
+                            */
+                            GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
                         }
                     }
 
@@ -364,7 +372,7 @@ if (userIrama == "tanggung")
                         {
                             if (generateCounter >= 4)
                             {
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
+                                /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[i];
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[i];
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[i];
@@ -372,13 +380,17 @@ if (userIrama == "tanggung")
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[i];
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[i];
                                 bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[i];
+                                */
+                                GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[i], userInputArr[i]);
                             }
                             else if (generateCounter == 2)
                             {
-                                bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
+                                /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
                                 bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[i];
                                 bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[i];
                                 bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[i];
+                                */
+                                GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[i], userInputArr[i]);
                             }
 
                             foundNonZero = true;
@@ -396,7 +408,7 @@ if (userIrama == "tanggung")
                     {
                         if (generateCounter >= 4)
                         {
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
+                            /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
                             bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[noteCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[noteCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[noteCounter - 1];
@@ -404,13 +416,17 @@ if (userIrama == "tanggung")
                             bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[noteCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[noteCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[noteCounter - 1];
+                            */
+                            GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
                         }
                         else if (generateCounter == 2)
                         {
-                            bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
+                            /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
                             bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[noteCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[noteCounter - 1];
                             bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[noteCounter - 1];
+                            */
+                            GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
                         }
                     }
 
@@ -421,7 +437,7 @@ if (userIrama == "tanggung")
                 {
                     if (generateCounter >= 4)
                     {
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
+                        /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
                         bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[generateCounter - 2];
                         bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[generateCounter - 2];
                         bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[generateCounter - 2];
@@ -429,13 +445,17 @@ if (userIrama == "tanggung")
                         bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[generateCounter - 2];
                         bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[generateCounter - 2];
                         bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[generateCounter - 2];
+                        */
+                        GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
                     }
                     else if (generateCounter == 2)
                     {
-                        bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
+                        /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
                         bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[generateCounter - 2];
                         bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 2];
                         bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[generateCounter - 2];
+                        */
+                        GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
                     }
                 }
 
@@ -443,7 +463,7 @@ if (userIrama == "tanggung")
                 {
                     if (generateCounter >= 4)
                     {
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
+                        /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
                         bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[generateCounter - 2];
                         bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[generateCounter - 1];
                         bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[generateCounter - 2];
@@ -451,13 +471,17 @@ if (userIrama == "tanggung")
                         bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[generateCounter - 2];
                         bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[generateCounter - 1];
                         bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[generateCounter - 2];
+                        */
+                        GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
                     }
                     else if (generateCounter == 2)
                     {
-                        bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
+                        /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
                         bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[generateCounter - 2];
                         bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
                         bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[generateCounter - 2];
+                        */
+                        GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
                     }
                 }
 
@@ -466,10 +490,12 @@ if (userIrama == "tanggung")
     }
 
     //last 4 notes
-    bonangPanerusPartTanggung[(generateCounter * 4) - 4] = userInputArr[noteCounter - 1];
+    /*bonangPanerusPartTanggung[(generateCounter * 4) - 4] = userInputArr[noteCounter - 1];
     bonangPanerusPartTanggung[(generateCounter * 4) - 3] = bonangPanerusPartTanggung[1];
     bonangPanerusPartTanggung[(generateCounter * 4) - 2] = bonangPanerusPartTanggung[2];
     bonangPanerusPartTanggung[(generateCounter * 4) - 1] = bonangPanerusPartTanggung[1];
+    */
+    GenerateBonangPanerusNotes(generateCounter, 4, -4, -1, bonangPanerusPartTanggung[1], bonangPanerusPartTanggung[2], userInputArr[noteCounter - 1]);
 
     Console.WriteLine("\n\nBonang Panerus:");
     Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartTanggung[1]}{bonangPanerusPartTanggung[2]}{bonangPanerusPartTanggung[1]})");
@@ -1496,6 +1522,32 @@ void TransposeBalungan(char[] balungan)
 
 //GENERATION METHODS GO HERE
 
+void GenerateBonangPanerusNotes(int generateCounter, int generateCounterMultiplier, int incrementLowerBound, int incrementUpperBound, char outNotes2and4, char outNote3, char outNote1 = '0')
+{
+    int panerusGenCounter = 0;
+    for (int j = incrementLowerBound; j <= incrementUpperBound; j++)
+    {
+        panerusGenCounter++;
+        if (panerusGenCounter % 4 == 1)
+        {
+            bonangPanerusPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNote1;
+        }
+        if (panerusGenCounter % 4 == 2 || panerusGenCounter % 4 == 0)
+        {
+            bonangPanerusPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNotes2and4;
+        }
+        if (panerusGenCounter % 4 == 3)
+        {
+            bonangPanerusPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNote3;
+        }
+    }
+    return;
+}
+
+void GenerateBonangBarungNotes()
+{
+
+}
 
 void DisplayPart(char[] part, int notesPerGatra)
 {

@@ -1,0 +1,15 @@
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\bin\Debug\net7.0\Code-Garap.exe
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\bin\Debug\net7.0\Code-Garap.deps.json
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\bin\Debug\net7.0\Code-Garap.runtimeconfig.json
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\bin\Debug\net7.0\Code-Garap.dll
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\bin\Debug\net7.0\Code-Garap.pdb
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\Code-Garap.csproj.AssemblyReference.cache
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\Code-Garap.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\Code-Garap.AssemblyInfoInputs.cache
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\Code-Garap.AssemblyInfo.cs
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\Code-Garap.csproj.CoreCompileInputs.cache
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\Code-Garap.dll
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\refint\Code-Garap.dll
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\Code-Garap.pdb
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\Code-Garap.genruntimeconfig.cache
+C:\Users\Owen Russell\Desktop\Project Code-Garap\Code-Garap\Code-Garap\obj\Debug\net7.0\ref\Code-Garap.dll
