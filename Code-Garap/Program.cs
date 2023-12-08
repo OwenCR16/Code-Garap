@@ -428,6 +428,7 @@ if (userIrama == "tanggung")
                         }
                         else if (generateCounter == 2)
                         {
+                            //SPECIAL CASE
                             bonangBarungPartTanggung[generateCounter - 2] = userInputArr[i];
                             bonangBarungPartTanggung[generateCounter - 1] = bonangBarungPartTanggung[generateCounter - 2];
                         }
@@ -1377,7 +1378,6 @@ void GenerateBonangPanerusNotesGroup(int generateCounter, char outNotes2and4, ch
     {
         GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, outNotes2and4, outNote3, outNote1);
     }
-    return;
 }
 
 void GenerateBonangPanerusNotes(int generateCounter, int generateCounterMultiplier, int incrementLowerBound, int incrementUpperBound, char outNotes2and4, char outNote3, char outNote1 = '0')
@@ -1387,22 +1387,54 @@ void GenerateBonangPanerusNotes(int generateCounter, int generateCounterMultipli
     {
         panerusGenCounter++;
         if (panerusGenCounter % 4 == 1)
-        {
             bonangPanerusPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNote1;
-        }
+
         if (panerusGenCounter % 4 == 2 || panerusGenCounter % 4 == 0)
-        {
             bonangPanerusPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNotes2and4;
-        }
+
         if (panerusGenCounter % 4 == 3)
-        {
             bonangPanerusPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNote3;
-        }
     }
-    return;
 }
 
 //barung part gen
+void GenerateBonangBarungNotesGroup(int generateCounter, char outNotes2and4, char outNote3, char outNote1 = '0')
+{
+    if (generateCounter > 2)
+        GenerateBonangPanerusNotes(generateCounter, 2, -6, -3, outNotes2and4, outNote3, outNote1);
+
+    if (generateCounter == 2)
+        GenerateBonangPanerusNotes(generateCounter, 1, -2, -1, outNotes2and4, outNote3, outNote1);
+}
+
+void GenerateBonangBarungNotes(int generateCounter, int generateCounterMultiplier, int incrementLowerBound, int incrementUpperBound, char outNotes2and4, char outNote3, char outNote1 = '0')
+{
+    int barungGenCounter = 0;
+    for (int j = incrementLowerBound; j <= incrementUpperBound; j++)
+    {
+        barungGenCounter++;
+        if (incrementUpperBound - incrementLowerBound == 1)
+        {
+            if (barungGenCounter == 1)
+                bonangBarungPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNote3;
+
+            if (barungGenCounter == 2)
+                bonangBarungPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNotes2and4;
+        }
+
+        else
+        {
+            if (barungGenCounter % 4 == 1)
+                bonangBarungPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNote1;
+
+            if (barungGenCounter % 4 == 2 || barungGenCounter % 4 == 0)
+                bonangBarungPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNotes2and4;
+
+            if (barungGenCounter % 4 == 3)
+                bonangBarungPartTanggung[(generateCounter * generateCounterMultiplier) + j] = outNote3;
+        }
+    }
+}
 
 
 //peking part gen
