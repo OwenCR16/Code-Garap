@@ -285,216 +285,118 @@ if (userIrama == "tanggung")
     int generateCounter = 0;
     foreach (char note in userInputArr)
     {
-        if (note == '1' || note == '2' || note == '3' || note == '4' || note == '5' || note == '6' || note == '7' || note == '0')
+        generateCounter++;
+        if (generateCounter % 2 == 0)
         {
-            generateCounter++;
-            if (generateCounter % 2 == 0)
+            //if the first pitch is a 0 and the second pitch is not a 0
+            if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] != '0'))
             {
-                //if the first pitch is a 0 and the second pitch is not a 0
-                if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] != '0'))
+                bool foundNonZero = false;
+                //lets look backwards through the balungan
+                for (int i = (generateCounter - 2); i >= 0; i--)
                 {
-                    bool foundNonZero = false;
-                    //lets look backwards through the balungan
-                    for (int i = (generateCounter - 2); i >= 0; i--)
-                    {
-                        //once we find the most recent pitch that isn't 0
-                        if (userInputArr[i] != '0')
-                        {
-                            if (generateCounter >= 4)
-                            {
-                                /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[generateCounter - 1];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 8] = '0';
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[generateCounter - 1];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[i];
-                                */
-                                GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[i], userInputArr[generateCounter - 1]);
-                            }
-                            else if (generateCounter == 2)
-                            {
-                                /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
-                                bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
-                                bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[i];
-                                */
-                                GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[i], userInputArr[generateCounter - 1]);
-                            }
-
-                            foundNonZero = true;
-
-                        }
-
-                        if (foundNonZero == true)
-                        {
-                            break;
-                        }
-                    }
-
-                    if (foundNonZero == false)
+                    //once we find the most recent pitch that isn't 0
+                    if (userInputArr[i] != '0')
                     {
                         if (generateCounter >= 4)
                         {
-                            /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[generateCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 8] = '0';
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[generateCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[noteCounter - 1];
-                            */
-                            GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
+                            GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[i], userInputArr[generateCounter - 1]);
                         }
                         else if (generateCounter == 2)
                         {
-                            /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
-                            bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[noteCounter - 1];
-                            */
-                            GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
+                            GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[i], userInputArr[generateCounter - 1]);
                         }
+
+                        foundNonZero = true;
                     }
 
+                    if (foundNonZero == true)
+                    {
+                        break;
+                    }
                 }
 
-                //if both pitches are 0
-                else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
+                if (foundNonZero == false)
                 {
-                    bool foundNonZero = false;
-
-                    for (int i = (generateCounter - 1); i >= 0; i--)
+                    if (generateCounter >= 4)
                     {
-                        if (userInputArr[i] != '0')
-                        {
-                            if (generateCounter >= 4)
-                            {
-                                /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 8] = '0';
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[i];
-                                */
-                                GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[i], userInputArr[i]);
-                            }
-                            else if (generateCounter == 2)
-                            {
-                                /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
-                                bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[i];
-                                bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[i];
-                                */
-                                GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[i], userInputArr[i]);
-                            }
-
-                            foundNonZero = true;
-
-                        }
-
-                        if (foundNonZero == true)
-                        {
-                            break;
-                        }
-
+                        GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
                     }
+                    else if (generateCounter == 2)
+                    {
+                        GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
+                    }
+                }
+            }
 
-                    if (foundNonZero == false)
+            //if both pitches are 0
+            else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
+            {
+                bool foundNonZero = false;
+
+                for (int i = (generateCounter - 1); i >= 0; i--)
+                {
+                    if (userInputArr[i] != '0')
                     {
                         if (generateCounter >= 4)
                         {
-                            /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 8] = '0';
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[noteCounter - 1];
-                            */
-                            GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
+                            GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[i], userInputArr[i]);
                         }
                         else if (generateCounter == 2)
                         {
-                            /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
-                            bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[noteCounter - 1];
-                            bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[noteCounter - 1];
-                            */
-                            GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
+                            GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[i], userInputArr[i]);
                         }
+
+                        foundNonZero = true;
                     }
 
+                    if (foundNonZero == true)
+                    {
+                        break;
+                    }
                 }
 
-                //if the second pitch is a 0 and the first pitch is not a 0
-                else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
+                if (foundNonZero == false)
                 {
                     if (generateCounter >= 4)
                     {
-                        /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 8] = '0';
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[generateCounter - 2];
-                        */
-                        GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
+                        GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
                     }
                     else if (generateCounter == 2)
                     {
-                        /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
-                        bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[generateCounter - 2];
-                        */
-                        GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
+                        GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
                     }
                 }
+            }
 
-                else
+            //if the second pitch is a 0 and the first pitch is not a 0
+            else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
+            {
+                if (generateCounter >= 4)
                 {
-                    if (generateCounter >= 4)
-                    {
-                        /*bonangPanerusPartTanggung[(generateCounter * 4) - 12] = '0';
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 11] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 10] = userInputArr[generateCounter - 1];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 9] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 8] = '0';
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 7] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 6] = userInputArr[generateCounter - 1];
-                        bonangPanerusPartTanggung[(generateCounter * 4) - 5] = userInputArr[generateCounter - 2];
-                        */
-                        GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
-                    }
-                    else if (generateCounter == 2)
-                    {
-                        /*bonangPanerusPartTanggung[(generateCounter * 2) - 4] = '0';
-                        bonangPanerusPartTanggung[(generateCounter * 2) - 3] = userInputArr[generateCounter - 2];
-                        bonangPanerusPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
-                        bonangPanerusPartTanggung[(generateCounter * 2) - 1] = userInputArr[generateCounter - 2];
-                        */
-                        GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
-                    }
+                    GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
                 }
+                else if (generateCounter == 2)
+                {
+                    GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
+                }
+            }
 
+            else
+            {
+                if (generateCounter >= 4)
+                {
+                    GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
+                }
+                else if (generateCounter == 2)
+                {
+                    GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
+                }
             }
         }
     }
 
     //last 4 notes
-    /*bonangPanerusPartTanggung[(generateCounter * 4) - 4] = userInputArr[noteCounter - 1];
-    bonangPanerusPartTanggung[(generateCounter * 4) - 3] = bonangPanerusPartTanggung[1];
-    bonangPanerusPartTanggung[(generateCounter * 4) - 2] = bonangPanerusPartTanggung[2];
-    bonangPanerusPartTanggung[(generateCounter * 4) - 1] = bonangPanerusPartTanggung[1];
-    */
     GenerateBonangPanerusNotes(generateCounter, 4, -4, -1, bonangPanerusPartTanggung[1], bonangPanerusPartTanggung[2], userInputArr[noteCounter - 1]);
 
     Console.WriteLine("\n\nBonang Panerus:");
