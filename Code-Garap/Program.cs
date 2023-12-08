@@ -368,7 +368,7 @@ if (userIrama == "tanggung")
                     //once we find the most recent pitch that isn't 0
                     if (userInputArr[i] != '0')
                     {
-                        if (generateCounter > 2)
+                        /*if (generateCounter > 2)
                         {
                             bonangBarungPartTanggung[(generateCounter * 2) - 6] = '0';
                             bonangBarungPartTanggung[(generateCounter * 2) - 5] = userInputArr[i];
@@ -380,7 +380,8 @@ if (userIrama == "tanggung")
                             bonangBarungPartTanggung[generateCounter - 2] = userInputArr[generateCounter - 1];
                             bonangBarungPartTanggung[generateCounter - 1] = userInputArr[i];
                         }
-
+                        */
+                        GenerateBonangBarungNotesGroup(generateCounter, userInputArr[i], userInputArr[generateCounter - 1]);
                         foundNonZero = true;
 
                     }
@@ -394,7 +395,7 @@ if (userIrama == "tanggung")
                 //if we can't find one before the start of the balungan we need to look at the final seleh
                 if (foundNonZero == false)
                 {
-                    if (generateCounter > 2)
+                    /*if (generateCounter > 2)
                     {
                         bonangBarungPartTanggung[(generateCounter * 2) - 6] = '0';
                         bonangBarungPartTanggung[(generateCounter * 2) - 5] = userInputArr[noteCounter - 1];
@@ -406,6 +407,8 @@ if (userIrama == "tanggung")
                         bonangBarungPartTanggung[generateCounter - 2] = userInputArr[generateCounter - 1];
                         bonangBarungPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
                     }
+                    */
+                    GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
                 }
 
             }
@@ -419,7 +422,7 @@ if (userIrama == "tanggung")
                 {
                     if (userInputArr[i] != '0')
                     {
-                        if (generateCounter > 2)
+                        /*if (generateCounter > 2)
                         {
                             bonangBarungPartTanggung[(generateCounter * 2) - 6] = '0';
                             bonangBarungPartTanggung[(generateCounter * 2) - 5] = userInputArr[i];
@@ -428,10 +431,11 @@ if (userIrama == "tanggung")
                         }
                         else if (generateCounter == 2)
                         {
-                            //SPECIAL CASE
                             bonangBarungPartTanggung[generateCounter - 2] = userInputArr[i];
-                            bonangBarungPartTanggung[generateCounter - 1] = bonangBarungPartTanggung[generateCounter - 2];
+                            bonangBarungPartTanggung[generateCounter - 1] = userInputArr[i];
                         }
+                        */
+                        GenerateBonangBarungNotesGroup(generateCounter, userInputArr[i], userInputArr[i]);
 
                         foundNonZero = true;
 
@@ -446,7 +450,7 @@ if (userIrama == "tanggung")
 
                 if (foundNonZero == false)
                 {
-                    if (generateCounter > 2)
+                    /*if (generateCounter > 2)
                     {
                         bonangBarungPartTanggung[(generateCounter * 2) - 6] = '0';
                         bonangBarungPartTanggung[(generateCounter * 2) - 5] = userInputArr[noteCounter - 1];
@@ -458,6 +462,8 @@ if (userIrama == "tanggung")
                         bonangBarungPartTanggung[generateCounter - 2] = userInputArr[noteCounter - 1];
                         bonangBarungPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
                     }
+                    */
+                    GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
                 }
 
             }
@@ -465,7 +471,7 @@ if (userIrama == "tanggung")
             //if the second pitch is a 0 and the first pitch is not a 0
             else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
             {
-                if (generateCounter > 2)
+                /*if (generateCounter > 2)
                 {
                     bonangBarungPartTanggung[(generateCounter * 2) - 6] = '0';
                     bonangBarungPartTanggung[(generateCounter * 2) - 5] = userInputArr[generateCounter - 2];
@@ -477,11 +483,13 @@ if (userIrama == "tanggung")
                     bonangBarungPartTanggung[generateCounter - 2] = userInputArr[generateCounter - 2];
                     bonangBarungPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 2];
                 }
+                */
+                GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
             }
 
             else
             {
-                if (generateCounter > 2)
+                /*if (generateCounter > 2)
                 {
                     bonangBarungPartTanggung[(generateCounter * 2) - 6] = '0';
                     bonangBarungPartTanggung[(generateCounter * 2) - 5] = userInputArr[generateCounter - 2];
@@ -493,6 +501,8 @@ if (userIrama == "tanggung")
                     bonangBarungPartTanggung[generateCounter - 2] = userInputArr[generateCounter - 1];
                     bonangBarungPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 2];
                 }
+                */
+                GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
             }
 
         }
@@ -1366,8 +1376,6 @@ void TransposeBalungan(char[] balungan)
     //(OPTIONS: MANYURA/SANGA/BARANG/NEM(IGNORING NOTE 4/NOT AVAILABLE IF SO) - FIRST CHECK IF THE USER BALUNGAN IS VIABLE)
 }
 
-//GENERATION METHODS GO HERE
-
 void GenerateBonangPanerusNotesGroup(int generateCounter, char outNotes2and4, char outNote3, char outNote1 = '0')
 {
     if (generateCounter >= 4)
@@ -1397,14 +1405,13 @@ void GenerateBonangPanerusNotes(int generateCounter, int generateCounterMultipli
     }
 }
 
-//barung part gen
 void GenerateBonangBarungNotesGroup(int generateCounter, char outNotes2and4, char outNote3, char outNote1 = '0')
 {
     if (generateCounter > 2)
-        GenerateBonangPanerusNotes(generateCounter, 2, -6, -3, outNotes2and4, outNote3, outNote1);
+        GenerateBonangBarungNotes(generateCounter, 2, -6, -3, outNotes2and4, outNote3, outNote1);
 
     if (generateCounter == 2)
-        GenerateBonangPanerusNotes(generateCounter, 1, -2, -1, outNotes2and4, outNote3, outNote1);
+        GenerateBonangBarungNotes(generateCounter, 1, -2, -1, outNotes2and4, outNote3, outNote1);
 }
 
 void GenerateBonangBarungNotes(int generateCounter, int generateCounterMultiplier, int incrementLowerBound, int incrementUpperBound, char outNotes2and4, char outNote3, char outNote1 = '0')
