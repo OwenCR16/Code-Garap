@@ -542,7 +542,7 @@ if (userIrama == "tanggung")
                             pekingNoteDownIndex = i;
                     }
 
-                    pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
+                    /*pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
                     pekingNoteDownPreviousIndexDifference = Math.Abs(pekingNoteDownIndex - pekingNotePreviousIndex);
 
                     if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
@@ -559,7 +559,8 @@ if (userIrama == "tanggung")
                     {
                         pekingPartTanggung[pekingCounter - 2] = pekingNoteUp;
                         pekingPartTanggung[pekingCounter - 1] = pekingNoteUp;
-                    }
+                    }*/
+                    ChangePekingNotesBasedOnDifference(pekingCounter, pekingNoteUp, pekingNoteDown, pekingNoteUpIndex, pekingNoteDownIndex, pekingNotePreviousIndex, 2);
                 }
             }
         }
@@ -636,27 +637,23 @@ if (userIrama == "tanggung")
                         else if (chosenPathet[i] == pekingNoteDown)
                             pekingNoteDownIndex = i;
                     }
-
-                    pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
+                    /*pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
                     pekingNoteDownPreviousIndexDifference = Math.Abs(pekingNoteDownIndex - pekingNotePreviousIndex);
 
-                    //the smaller difference is the one that is generated
                     if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
                     {
                         pekingPartTanggung[pekingCounter - 4] = pekingNoteDown;
                         pekingPartTanggung[pekingCounter - 3] = pekingNoteDown;
                     }
-                    if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference)
+                    if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference || pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
                     {
                         pekingPartTanggung[pekingCounter - 4] = pekingNoteUp;
                         pekingPartTanggung[pekingCounter - 3] = pekingNoteUp;
                     }
-                    //if they are the same, then choose the upper one
-                    if (pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
-                    {
-                        pekingPartTanggung[pekingCounter - 4] = pekingNoteUp;
-                        pekingPartTanggung[pekingCounter - 3] = pekingNoteUp;
-                    }
+                    */
+                    //calculate the differences between pkNoteUp/pkNoteDown and PkNotePrevious
+                    //The smaller difference is the one that is generated, or if they are the same choose the upper one
+                    ChangePekingNotesBasedOnDifference(pekingCounter, pekingNoteUp, pekingNoteDown, pekingNoteUpIndex, pekingNoteDownIndex, pekingNotePreviousIndex, 4);
                 }
             }
         }
@@ -696,10 +693,10 @@ if (userIrama == "tanggung")
             }
             if (pekingCounter > 8)
                 pekingNotePrevious = pekingPartTanggung[pekingCounter - 9];
-            
+
             else if (pekingCounter == 8)
                 pekingNotePrevious = pekingPartTanggung[pekingPartTanggung.Length - 1];
-            
+
             if (pekingNotePrevious == pekingNoteUp)
                 ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
 
@@ -1265,15 +1262,44 @@ void GenerateBonangBarungNotes(int generateCounter, int generateCounterMultiplie
 
 //peking part gen
 
-void ChangePekingNotes(int pekingCounter, char outNote1and3, char outNote2)
+void ChangePekingNotes(int pekingCounter, char outNoteOdd, char outNoteEven)
 {
     for (int j = -8; j <= -3; j++)
     {
         if (j < -6 || j > -5)
-            pekingPartTanggung[pekingCounter + j] = outNote1and3;
+            pekingPartTanggung[pekingCounter + j] = outNoteOdd;
 
         else
-            pekingPartTanggung[pekingCounter + j] = outNote2;
+            pekingPartTanggung[pekingCounter + j] = outNoteEven;
+    }
+}
+
+//UNIVERSAL CHANGEPEKINGNOTES - CHANGE THE ABOVE TO THIS
+//BEING X=0 IF THE FIRST PAIR IS EVEN, AND X=2 IF THE FIRST PAIR IS ODD (how to do this?)
+//for (...)
+//x++ (counter)
+//if x%2 = 0 (for each pair of notes)
+//  if x == 2 (for the first odd pair)
+//      print outNoteOdd for both
+//  else if (x/2)%2 == 0 (if the pair is an even pair)
+//      print outNoteEven for both
+//  else (if the pair is an odd pair)
+//      print outNoteOdd for both
+
+void ChangePekingNotesBasedOnDifference(int pekingCounter, char pekingNoteUp, char pekingNoteDown, int pekingNoteUpIndex, int pekingNoteDownIndex, int pekingNotePreviousIndex, int howManyNotesBack)
+{
+    int pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
+    int pekingNoteDownPreviousIndexDifference = Math.Abs(pekingNoteDownIndex - pekingNotePreviousIndex);
+
+    if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
+    {
+        pekingPartTanggung[pekingCounter - howManyNotesBack] = pekingNoteDown;
+        pekingPartTanggung[pekingCounter - (howManyNotesBack - 1)] = pekingNoteDown;
+    }
+    if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference || pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
+    {
+        pekingPartTanggung[pekingCounter - howManyNotesBack] = pekingNoteUp;
+        pekingPartTanggung[pekingCounter - (howManyNotesBack - 1)] = pekingNoteUp;
     }
 }
 
