@@ -442,15 +442,7 @@ if (userIrama == "tanggung")
     generateCounter = 0;
     foreach (char note in userInputArr)
     {
-        if (note == '1' || note == '2' || note == '3' || note == '4' || note == '5' || note == '6' || note == '7')
-        {
-            generateCounter++;
-
-            pekingPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
-            pekingPartTanggung[(generateCounter * 2) - 1] = userInputArr[generateCounter - 1];
-        }
-
-        else if (note == '0')
+        if (note == '0')
         {
             generateCounter++;
 
@@ -464,6 +456,14 @@ if (userIrama == "tanggung")
                 pekingPartTanggung[(generateCounter * 2) - 2] = pekingPartTanggung[(generateCounter * 2) - 3];
                 pekingPartTanggung[(generateCounter * 2) - 1] = pekingPartTanggung[(generateCounter * 2) - 3];
             }
+        }
+
+        else
+        {
+            generateCounter++;
+
+            pekingPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
+            pekingPartTanggung[(generateCounter * 2) - 1] = userInputArr[generateCounter - 1];
         }
     }
 
@@ -528,21 +528,25 @@ if (userIrama == "tanggung")
 
                 if (pekingNotePrevious == pekingNoteUp)
                 {
-                    pekingPartTanggung[pekingCounter - 8] = pekingNoteDown;
+                    /*pekingPartTanggung[pekingCounter - 8] = pekingNoteDown;
                     pekingPartTanggung[pekingCounter - 7] = pekingNoteDown;
                     pekingPartTanggung[pekingCounter - 6] = pekingPartTanggung[pekingCounter - 1];
                     pekingPartTanggung[pekingCounter - 5] = pekingPartTanggung[pekingCounter - 1];
                     pekingPartTanggung[pekingCounter - 4] = pekingNoteDown;
                     pekingPartTanggung[pekingCounter - 3] = pekingNoteDown;
+                    */
+                    ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
                 }
                 else if (pekingNotePrevious == pekingNoteDown)
                 {
-                    pekingPartTanggung[pekingCounter - 8] = pekingNoteUp;
+                    /*pekingPartTanggung[pekingCounter - 8] = pekingNoteUp;
                     pekingPartTanggung[pekingCounter - 7] = pekingNoteUp;
                     pekingPartTanggung[pekingCounter - 6] = pekingPartTanggung[pekingCounter - 1];
                     pekingPartTanggung[pekingCounter - 5] = pekingPartTanggung[pekingCounter - 1];
                     pekingPartTanggung[pekingCounter - 4] = pekingNoteUp;
                     pekingPartTanggung[pekingCounter - 3] = pekingNoteUp;
+                    */
+                    ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
                 }
                 else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
                 {
@@ -568,30 +572,25 @@ if (userIrama == "tanggung")
 
                     if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
                     {
-                        pekingPartTanggung[pekingCounter - 8] = pekingNoteDown;
+                        /*pekingPartTanggung[pekingCounter - 8] = pekingNoteDown;
                         pekingPartTanggung[pekingCounter - 7] = pekingNoteDown;
                         pekingPartTanggung[pekingCounter - 6] = pekingPartTanggung[pekingCounter - 1];
                         pekingPartTanggung[pekingCounter - 5] = pekingPartTanggung[pekingCounter - 1];
                         pekingPartTanggung[pekingCounter - 4] = pekingNoteDown;
                         pekingPartTanggung[pekingCounter - 3] = pekingNoteDown;
+                        */
+                        ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
                     }
-                    if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference)
+                    if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference || pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
                     {
-                        pekingPartTanggung[pekingCounter - 8] = pekingNoteUp;
+                        /*pekingPartTanggung[pekingCounter - 8] = pekingNoteUp;
                         pekingPartTanggung[pekingCounter - 7] = pekingNoteUp;
                         pekingPartTanggung[pekingCounter - 6] = pekingPartTanggung[pekingCounter - 1];
                         pekingPartTanggung[pekingCounter - 5] = pekingPartTanggung[pekingCounter - 1];
                         pekingPartTanggung[pekingCounter - 4] = pekingNoteUp;
                         pekingPartTanggung[pekingCounter - 3] = pekingNoteUp;
-                    }
-                    if (pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
-                    {
-                        pekingPartTanggung[pekingCounter - 8] = pekingNoteUp;
-                        pekingPartTanggung[pekingCounter - 7] = pekingNoteUp;
-                        pekingPartTanggung[pekingCounter - 6] = pekingPartTanggung[pekingCounter - 1];
-                        pekingPartTanggung[pekingCounter - 5] = pekingPartTanggung[pekingCounter - 1];
-                        pekingPartTanggung[pekingCounter - 4] = pekingNoteUp;
-                        pekingPartTanggung[pekingCounter - 3] = pekingNoteUp;
+                        */
+                        ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
                     }
                 }
             }
@@ -1278,16 +1277,15 @@ void TransposeBalungan(char[] balungan)
     //(OPTIONS: MANYURA/SANGA/BARANG/NEM(IGNORING NOTE 4/NOT AVAILABLE IF SO) - FIRST CHECK IF THE USER BALUNGAN IS VIABLE)
 }
 
+//NOTE THAT FOR NOW THESE METHODS AND THEIR NAMES ONLY APPLY TO IRAMA TANGGUNG
+
 void GenerateBonangPanerusNotesGroup(int generateCounter, char outNotes2and4, char outNote3, char outNote1 = '0')
 {
     if (generateCounter >= 4)
-    {
         GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, outNotes2and4, outNote3, outNote1);
-    }
+    
     if (generateCounter == 2)
-    {
         GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, outNotes2and4, outNote3, outNote1);
-    }
 }
 
 void GenerateBonangPanerusNotes(int generateCounter, int generateCounterMultiplier, int incrementLowerBound, int incrementUpperBound, char outNotes2and4, char outNote3, char outNote1 = '0')
@@ -1348,7 +1346,17 @@ void GenerateBonangBarungNotes(int generateCounter, int generateCounterMultiplie
 
 //peking part gen
 
+void ChangePekingNotes(int pekingCounter, char outNote1and3, char outNote2)
+{
+    for (int j = -8; j <= -3; j++)
+    {
+        if (j < -6 || j > -5)
+            pekingPartTanggung[pekingCounter + j] = outNote1and3;
 
+        else
+            pekingPartTanggung[pekingCounter + j] = outNote2;
+    }
+}
 
 void DisplayPart(char[] part, int notesPerGatra)
 {
