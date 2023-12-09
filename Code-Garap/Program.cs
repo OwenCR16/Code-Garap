@@ -404,7 +404,7 @@ if (userIrama == "tanggung")
             //if the second pitch is a 0 and the first pitch is not a 0
             else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
                 GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
-            
+
             else
                 GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
         }
@@ -477,7 +477,7 @@ if (userIrama == "tanggung")
 
     int pekingCounter = 0;
 
-
+/*
     //Looking at 1 possible major change (1 or more double notes changing).
     foreach (char note in pekingPartTanggung)
     {
@@ -490,112 +490,69 @@ if (userIrama == "tanggung")
         int pekingNotePreviousIndex = 0;
         int pekingNoteUpPreviousIndexDifference = 0;
         int pekingNoteDownPreviousIndexDifference = 0;
-
+        
         //Looking at the entire gatra for if the second and third (double) notes are the same (in this case the whole bar changes to 'anticipate' the seleh).
-        if (pekingCounter % 8 == 0)
+        if (pekingCounter % 8 == 0 && pekingPartTanggung[pekingCounter - 4] == pekingPartTanggung[pekingCounter - 6])
         {
-            if (pekingPartTanggung[pekingCounter - 4] == pekingPartTanggung[pekingCounter - 6])
+            for (int i = 0; i < chosenPathet.Length; i++)
             {
-                for (int i = 0; i < chosenPathet.Length; i++)
+                if (chosenPathet[i] == pekingPartTanggung[pekingCounter - 1])
                 {
-                    if (chosenPathet[i] == pekingPartTanggung[pekingCounter - 1])
+                    if (i != 0 && i != chosenPathet.Length - 1)
                     {
-                        if (i != 0 && i != chosenPathet.Length - 1)
-                        {
-                            pekingNoteUp = chosenPathet[i + 1];
-                            pekingNoteDown = chosenPathet[i - 1];
-                        }
-                        else if (i == 0)
-                        {
-                            pekingNoteUp = chosenPathet[i + 1];
-                            pekingNoteDown = chosenPathet[chosenPathet.Length - 1];
-                        }
-                        else if (i == chosenPathet.Length - 1)
-                        {
-                            pekingNoteUp = chosenPathet[0];
-                            pekingNoteDown = chosenPathet[i - 1];
-                        }
+                        pekingNoteUp = chosenPathet[i + 1];
+                        pekingNoteDown = chosenPathet[i - 1];
                     }
-                }
-                if (pekingCounter > 8)
-                {
-                    pekingNotePrevious = pekingPartTanggung[pekingCounter - 9];
-                }
-                else if (pekingCounter == 8)
-                {
-                    pekingNotePrevious = pekingPartTanggung[pekingPartTanggung.Length - 1];
-                }
-
-                if (pekingNotePrevious == pekingNoteUp)
-                {
-                    /*pekingPartTanggung[pekingCounter - 8] = pekingNoteDown;
-                    pekingPartTanggung[pekingCounter - 7] = pekingNoteDown;
-                    pekingPartTanggung[pekingCounter - 6] = pekingPartTanggung[pekingCounter - 1];
-                    pekingPartTanggung[pekingCounter - 5] = pekingPartTanggung[pekingCounter - 1];
-                    pekingPartTanggung[pekingCounter - 4] = pekingNoteDown;
-                    pekingPartTanggung[pekingCounter - 3] = pekingNoteDown;
-                    */
-                    ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
-                }
-                else if (pekingNotePrevious == pekingNoteDown)
-                {
-                    /*pekingPartTanggung[pekingCounter - 8] = pekingNoteUp;
-                    pekingPartTanggung[pekingCounter - 7] = pekingNoteUp;
-                    pekingPartTanggung[pekingCounter - 6] = pekingPartTanggung[pekingCounter - 1];
-                    pekingPartTanggung[pekingCounter - 5] = pekingPartTanggung[pekingCounter - 1];
-                    pekingPartTanggung[pekingCounter - 4] = pekingNoteUp;
-                    pekingPartTanggung[pekingCounter - 3] = pekingNoteUp;
-                    */
-                    ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
-                }
-                else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
-                {
-                    for (int i = 0; i < chosenPathet.Length; i++)
+                    else if (i == 0)
                     {
-                        if (chosenPathet[i] == pekingNotePrevious)
-                        {
-                            pekingNotePreviousIndex = i;
-                        }
-                        else if (chosenPathet[i] == pekingNoteUp)
-                        {
-                            pekingNoteUpIndex = i;
-                        }
-                        else if (chosenPathet[i] == pekingNoteDown)
-                        {
-                            pekingNoteDownIndex = i;
-                        }
+                        pekingNoteUp = chosenPathet[i + 1];
+                        pekingNoteDown = chosenPathet[chosenPathet.Length - 1];
                     }
-
-                    pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
-
-                    pekingNoteDownPreviousIndexDifference = Math.Abs(pekingNoteDownIndex - pekingNotePreviousIndex);
-
-                    if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
+                    else if (i == chosenPathet.Length - 1)
                     {
-                        /*pekingPartTanggung[pekingCounter - 8] = pekingNoteDown;
-                        pekingPartTanggung[pekingCounter - 7] = pekingNoteDown;
-                        pekingPartTanggung[pekingCounter - 6] = pekingPartTanggung[pekingCounter - 1];
-                        pekingPartTanggung[pekingCounter - 5] = pekingPartTanggung[pekingCounter - 1];
-                        pekingPartTanggung[pekingCounter - 4] = pekingNoteDown;
-                        pekingPartTanggung[pekingCounter - 3] = pekingNoteDown;
-                        */
-                        ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
-                    }
-                    if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference || pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
-                    {
-                        /*pekingPartTanggung[pekingCounter - 8] = pekingNoteUp;
-                        pekingPartTanggung[pekingCounter - 7] = pekingNoteUp;
-                        pekingPartTanggung[pekingCounter - 6] = pekingPartTanggung[pekingCounter - 1];
-                        pekingPartTanggung[pekingCounter - 5] = pekingPartTanggung[pekingCounter - 1];
-                        pekingPartTanggung[pekingCounter - 4] = pekingNoteUp;
-                        pekingPartTanggung[pekingCounter - 3] = pekingNoteUp;
-                        */
-                        ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
+                        pekingNoteUp = chosenPathet[0];
+                        pekingNoteDown = chosenPathet[i - 1];
                     }
                 }
             }
+            if (pekingCounter > 8)
+                pekingNotePrevious = pekingPartTanggung[pekingCounter - 9];
+            
+            else if (pekingCounter == 8)
+                pekingNotePrevious = pekingPartTanggung[pekingPartTanggung.Length - 1];
+            
+            if (pekingNotePrevious == pekingNoteUp)
+                ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
+
+            else if (pekingNotePrevious == pekingNoteDown)
+                ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
+
+            else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
+            {
+                for (int i = 0; i < chosenPathet.Length; i++)
+                {
+                    if (chosenPathet[i] == pekingNotePrevious)
+                        pekingNotePreviousIndex = i;
+
+                    else if (chosenPathet[i] == pekingNoteUp)
+                        pekingNoteUpIndex = i;
+
+                    else if (chosenPathet[i] == pekingNoteDown)
+                        pekingNoteDownIndex = i;
+                }
+
+                pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
+                pekingNoteDownPreviousIndexDifference = Math.Abs(pekingNoteDownIndex - pekingNotePreviousIndex);
+
+                if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
+                    ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
+
+                if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference || pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
+                    ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
+            }
         }
-    }
+    }*/
+
     pekingCounter = 0;
     //Looking at 2 possible minor changes (1 double note changing).
     foreach (char note in pekingPartTanggung)
@@ -614,20 +571,12 @@ if (userIrama == "tanggung")
         //Looking at (double) notes 1 and 3 in each gatra - these are the notes that change
         if (pekingCounter % 2 == 0 && pekingCounter % 4 != 0)
         {
-            if (pekingCounter > 2)
-            {
-                if (pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingCounter - 3])
-                {
-                    pekingNotePreviousSpecial = pekingPartTanggung[pekingCounter - 3];
-                }
-            }
-            if (pekingCounter == 2)
-            {
-                if (pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingPartTanggung.Length - 1])
-                {
-                    pekingNotePreviousSpecial = pekingPartTanggung[pekingPartTanggung.Length - 1];
-                }
-            }
+            if (pekingCounter > 2 && pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingCounter - 3])
+                pekingNotePreviousSpecial = pekingPartTanggung[pekingCounter - 3];
+
+            if (pekingCounter == 2 && pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingPartTanggung.Length - 1])
+                pekingNotePreviousSpecial = pekingPartTanggung[pekingPartTanggung.Length - 1];
+
             if (pekingPartTanggung[pekingCounter - 1] == pekingNotePreviousSpecial)
             {
                 for (int i = 0; i < chosenPathet.Length; i++)
@@ -669,21 +618,16 @@ if (userIrama == "tanggung")
                     for (int i = 0; i < chosenPathet.Length; i++)
                     {
                         if (chosenPathet[i] == pekingNotePrevious)
-                        {
                             pekingNotePreviousIndex = i;
-                        }
+
                         else if (chosenPathet[i] == pekingNoteUp)
-                        {
                             pekingNoteUpIndex = i;
-                        }
+
                         else if (chosenPathet[i] == pekingNoteDown)
-                        {
                             pekingNoteDownIndex = i;
-                        }
                     }
 
                     pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
-
                     pekingNoteDownPreviousIndexDifference = Math.Abs(pekingNoteDownIndex - pekingNotePreviousIndex);
 
                     if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
@@ -703,7 +647,6 @@ if (userIrama == "tanggung")
                     }
                 }
             }
-
         }
 
         pekingNoteUp = '0';
@@ -748,13 +691,11 @@ if (userIrama == "tanggung")
 
                 //find the (double) note *before* the previous (double) note
                 if (pekingCounter > 4)
-                {
                     pekingNotePrevious = pekingPartTanggung[pekingCounter - 5];
-                }
-                if (pekingCounter == 4)
-                {
+
+                else if (pekingCounter == 4)
                     pekingNotePrevious = pekingPartTanggung[pekingPartTanggung.Length - 1];
-                }
+
 
                 //Generate corrections
                 if (pekingNotePrevious == pekingNoteUp)
@@ -773,21 +714,16 @@ if (userIrama == "tanggung")
                     for (int i = 0; i < chosenPathet.Length; i++)
                     {
                         if (chosenPathet[i] == pekingNotePrevious)
-                        {
                             pekingNotePreviousIndex = i;
-                        }
+
                         else if (chosenPathet[i] == pekingNoteUp)
-                        {
                             pekingNoteUpIndex = i;
-                        }
+
                         else if (chosenPathet[i] == pekingNoteDown)
-                        {
                             pekingNoteDownIndex = i;
-                        }
                     }
 
                     pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
-
                     pekingNoteDownPreviousIndexDifference = Math.Abs(pekingNoteDownIndex - pekingNotePreviousIndex);
 
                     //the smaller difference is the one that is generated
@@ -810,7 +746,67 @@ if (userIrama == "tanggung")
                 }
             }
         }
+        
+        //Looking at the entire gatra for if the second and third (double) notes are the same (in this case the whole bar changes to 'anticipate' the seleh).
+        if (pekingCounter % 8 == 0 && pekingPartTanggung[pekingCounter - 4] == pekingPartTanggung[pekingCounter - 6])
+        {
+            for (int i = 0; i < chosenPathet.Length; i++)
+            {
+                if (chosenPathet[i] == pekingPartTanggung[pekingCounter - 1])
+                {
+                    if (i != 0 && i != chosenPathet.Length - 1)
+                    {
+                        pekingNoteUp = chosenPathet[i + 1];
+                        pekingNoteDown = chosenPathet[i - 1];
+                    }
+                    else if (i == 0)
+                    {
+                        pekingNoteUp = chosenPathet[i + 1];
+                        pekingNoteDown = chosenPathet[chosenPathet.Length - 1];
+                    }
+                    else if (i == chosenPathet.Length - 1)
+                    {
+                        pekingNoteUp = chosenPathet[0];
+                        pekingNoteDown = chosenPathet[i - 1];
+                    }
+                }
+            }
+            if (pekingCounter > 8)
+                pekingNotePrevious = pekingPartTanggung[pekingCounter - 9];
+            
+            else if (pekingCounter == 8)
+                pekingNotePrevious = pekingPartTanggung[pekingPartTanggung.Length - 1];
+            
+            if (pekingNotePrevious == pekingNoteUp)
+                ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
 
+            else if (pekingNotePrevious == pekingNoteDown)
+                ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
+
+            else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
+            {
+                for (int i = 0; i < chosenPathet.Length; i++)
+                {
+                    if (chosenPathet[i] == pekingNotePrevious)
+                        pekingNotePreviousIndex = i;
+
+                    else if (chosenPathet[i] == pekingNoteUp)
+                        pekingNoteUpIndex = i;
+
+                    else if (chosenPathet[i] == pekingNoteDown)
+                        pekingNoteDownIndex = i;
+                }
+
+                pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
+                pekingNoteDownPreviousIndexDifference = Math.Abs(pekingNoteDownIndex - pekingNotePreviousIndex);
+
+                if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
+                    ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
+
+                if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference || pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
+                    ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
+            }
+        }
     }
 
     Console.WriteLine("\n\nPeking:");
@@ -1283,7 +1279,7 @@ void GenerateBonangPanerusNotesGroup(int generateCounter, char outNotes2and4, ch
 {
     if (generateCounter >= 4)
         GenerateBonangPanerusNotes(generateCounter, 4, -12, -5, outNotes2and4, outNote3, outNote1);
-    
+
     if (generateCounter == 2)
         GenerateBonangPanerusNotes(generateCounter, 2, -4, -1, outNotes2and4, outNote3, outNote1);
 }
