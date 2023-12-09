@@ -467,94 +467,9 @@ if (userIrama == "tanggung")
         }
     }
 
-    //CORRECTIONS FOR PEKINGAN RULES (COMPLICATED)
+    //CORRECTIONS FOR PEKINGAN RULES
     //Note: You cannot play two pairs of the same note consecutively. Some extra statements have been added for this below.
-
-    // Possible Future Changes to Peking Code-Garap:
-    // In Gambir Sawit - (32) 0165 0056 (16) PRODUCES (3322) 66116655 *11661166* - my instincts tell me it should be *66551166* instead. 
-    // This isn't a programming bug, it's a possible rule that needs changing/a new rule to ammend.
-    // However, it's fairly minor and probably worth overlooking in this case as the original still works.
-
     int pekingCounter = 0;
-
-/*
-    //Looking at 1 possible major change (1 or more double notes changing).
-    foreach (char note in pekingPartTanggung)
-    {
-        pekingCounter++;
-        char pekingNoteUp = '0';
-        char pekingNoteDown = '0';
-        char pekingNotePrevious = '0';
-        int pekingNoteUpIndex = 0;
-        int pekingNoteDownIndex = 0;
-        int pekingNotePreviousIndex = 0;
-        int pekingNoteUpPreviousIndexDifference = 0;
-        int pekingNoteDownPreviousIndexDifference = 0;
-        
-        //Looking at the entire gatra for if the second and third (double) notes are the same (in this case the whole bar changes to 'anticipate' the seleh).
-        if (pekingCounter % 8 == 0 && pekingPartTanggung[pekingCounter - 4] == pekingPartTanggung[pekingCounter - 6])
-        {
-            for (int i = 0; i < chosenPathet.Length; i++)
-            {
-                if (chosenPathet[i] == pekingPartTanggung[pekingCounter - 1])
-                {
-                    if (i != 0 && i != chosenPathet.Length - 1)
-                    {
-                        pekingNoteUp = chosenPathet[i + 1];
-                        pekingNoteDown = chosenPathet[i - 1];
-                    }
-                    else if (i == 0)
-                    {
-                        pekingNoteUp = chosenPathet[i + 1];
-                        pekingNoteDown = chosenPathet[chosenPathet.Length - 1];
-                    }
-                    else if (i == chosenPathet.Length - 1)
-                    {
-                        pekingNoteUp = chosenPathet[0];
-                        pekingNoteDown = chosenPathet[i - 1];
-                    }
-                }
-            }
-            if (pekingCounter > 8)
-                pekingNotePrevious = pekingPartTanggung[pekingCounter - 9];
-            
-            else if (pekingCounter == 8)
-                pekingNotePrevious = pekingPartTanggung[pekingPartTanggung.Length - 1];
-            
-            if (pekingNotePrevious == pekingNoteUp)
-                ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
-
-            else if (pekingNotePrevious == pekingNoteDown)
-                ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
-
-            else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
-            {
-                for (int i = 0; i < chosenPathet.Length; i++)
-                {
-                    if (chosenPathet[i] == pekingNotePrevious)
-                        pekingNotePreviousIndex = i;
-
-                    else if (chosenPathet[i] == pekingNoteUp)
-                        pekingNoteUpIndex = i;
-
-                    else if (chosenPathet[i] == pekingNoteDown)
-                        pekingNoteDownIndex = i;
-                }
-
-                pekingNoteUpPreviousIndexDifference = Math.Abs(pekingNoteUpIndex - pekingNotePreviousIndex);
-                pekingNoteDownPreviousIndexDifference = Math.Abs(pekingNoteDownIndex - pekingNotePreviousIndex);
-
-                if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
-                    ChangePekingNotes(pekingCounter, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
-
-                if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference || pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
-                    ChangePekingNotes(pekingCounter, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
-            }
-        }
-    }*/
-
-    pekingCounter = 0;
-    //Looking at 2 possible minor changes (1 double note changing).
     foreach (char note in pekingPartTanggung)
     {
         pekingCounter++;
@@ -652,7 +567,6 @@ if (userIrama == "tanggung")
         pekingNoteUp = '0';
         pekingNoteDown = '0';
         pekingNotePrevious = '0';
-        pekingNotePreviousSpecial = '0';
         pekingNoteUpIndex = 0;
         pekingNoteDownIndex = 0;
         pekingNotePreviousIndex = 0;
@@ -746,8 +660,17 @@ if (userIrama == "tanggung")
                 }
             }
         }
-        
-        //Looking at the entire gatra for if the second and third (double) notes are the same (in this case the whole bar changes to 'anticipate' the seleh).
+
+        pekingNoteUp = '0';
+        pekingNoteDown = '0';
+        pekingNotePrevious = '0';
+        pekingNoteUpIndex = 0;
+        pekingNoteDownIndex = 0;
+        pekingNotePreviousIndex = 0;
+        pekingNoteUpPreviousIndexDifference = 0;
+        pekingNoteDownPreviousIndexDifference = 0;
+
+        //Looking at the entire gatra to see if the second and third (double) notes are the same (if so, the whole gatra changes to 'anticipate' the seleh).
         if (pekingCounter % 8 == 0 && pekingPartTanggung[pekingCounter - 4] == pekingPartTanggung[pekingCounter - 6])
         {
             for (int i = 0; i < chosenPathet.Length; i++)
