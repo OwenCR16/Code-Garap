@@ -79,7 +79,6 @@ do
             Console.WriteLine(ex.Message);
             DisplayPathetOptions(userLaras);
         }
-
     }
     else
     {
@@ -339,23 +338,18 @@ if (userIrama == "tanggung")
     bonangBarungPartTanggung[(generateCounter * 2) - 2] = userInputArr[noteCounter - 1];
 
     if (userInputArr[0] != '0')
-    {
         bonangBarungPartTanggung[(generateCounter * 2) - 1] = userInputArr[0];
-    }
+    
     else if (userInputArr[0] == '0')
-    {
         bonangBarungPartTanggung[(generateCounter * 2) - 1] = chosenPathet[0];
-    }
-
+    
     Console.WriteLine("\n\nBonang Barung:");
     if (userInputArr[0] != '0')
-    {
         Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[0]})");
-    }
+    
     else if (userInputArr[0] == '0')
-    {
         Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]})");
-    }
+    
     Console.Write("\t");
     DisplayPart(bonangBarungPartTanggung, 8);
 
@@ -370,7 +364,6 @@ if (userIrama == "tanggung")
         if (note == '0')
         {
             generateCounter++;
-
             if (generateCounter == 1)
             {
                 pekingPartTanggung[(generateCounter * 2) - 2] = userInputArr[noteCounter - 1];
@@ -386,7 +379,6 @@ if (userIrama == "tanggung")
         else
         {
             generateCounter++;
-
             pekingPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
             pekingPartTanggung[(generateCounter * 2) - 1] = userInputArr[generateCounter - 1];
         }
