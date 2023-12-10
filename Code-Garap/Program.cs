@@ -626,52 +626,46 @@ for (int i = 0; i < (noteCounter * 4); i++)
         bonangBarungPartDados[i] = bonangBarungPartTanggung[i];
     else if (i == 5)
     {
-        bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1)/2) + 0];
-        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1)/2) + 1];
-        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1)/2) - 2];
-        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1)/2) - 1];
+        /*bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1) / 2) + 0];
+        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1) / 2) + 1];*/
+        GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, -2, -1, 0.5F, 0);
+        /*bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1) / 2) - 2];
+        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1) / 2) - 1];*/
+        GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -1, 0, -1, 0.5F, -2);
+        
     }
     else if ((i - 1) % 8 == 4 && i > 5 && (i - 1) / 2 < (noteCounter * 2) - 2)
     {
-        bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1)/2) - 4];
-        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1)/2) - 3];
-        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1)/2) - 2];
-        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1)/2) - 1];
+        /*bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1) / 2) - 4];
+        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1) / 2) - 3];
+        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1) / 2) - 2];
+        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1) / 2) - 1];*/
+        GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, 0, -1, 0.5F, -4);
     }
     else if ((i - 1) % 8 == 4 && (i - 1) / 2 >= (noteCounter * 2) - 2)
     {
-        bonangBarungPartDados[i - 3] = bonangBarungPartDados[i - 7];
-        bonangBarungPartDados[i - 2] = bonangBarungPartDados[i - 6];
-        bonangBarungPartDados[i - 1] = bonangBarungPartDados[i - 5];
-        bonangBarungPartDados[i] = bonangBarungPartDados[i - 4];
+        GenerateDadosNotes(bonangBarungPartDados, bonangBarungPartDados, i, -3, 0, 0, 1, -7);
         bonangBarungPartDados[i + 1] = bonangBarungPartDados[i - 5];
         bonangBarungPartDados[i + 2] = bonangBarungPartDados[1];
     }
     else if ((i - 1) % 8 == 0)
     {
-        bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1)/2) - 2];
-        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1)/2) - 1];
-        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1)/2) + 0];
-        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1)/2) + 1];
+        /*bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1) / 2) - 2];
+        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1) / 2) - 1];
+        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1) / 2) + 0];
+        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1) / 2) + 1];*/
+        GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, 0, -1, 0.5F, -2);
     }
 }
 //PEKING - PRINT EACH PAIR TWICE (repeat each four notes twice)
 for (int i = 0; i < (noteCounter * 4); i++)
 {
     if ((i + 1) % 8 == 4)
-    {
-        pekingPartDados[i - 3] = pekingPartTanggung[((i + 1)/2) - 2];
-        pekingPartDados[i - 2] = pekingPartTanggung[((i + 1)/2) - 1];
-        pekingPartDados[i - 1] = pekingPartTanggung[((i + 1)/2) + 0];
-        pekingPartDados[i] = pekingPartTanggung[((i + 1)/2) + 1];
-    }
+        GenerateDadosNotes(pekingPartTanggung, pekingPartDados, i, -3, 0, 1, 0.5F, -2);
+    
     else if ((i + 1) % 8 == 0)
-    {
-        pekingPartDados[i - 3] = pekingPartTanggung[((i + 1)/2) - 4];
-        pekingPartDados[i - 2] = pekingPartTanggung[((i + 1)/2) - 3];
-        pekingPartDados[i - 1] = pekingPartTanggung[((i + 1)/2) - 2];
-        pekingPartDados[i] = pekingPartTanggung[((i + 1)/2) - 1];
-    }
+        GenerateDadosNotes(pekingPartTanggung, pekingPartDados, i, -3, 0, 1, 0.5F, -4);
+    
 }
 //SARON/SLENTHEM - ADD A SPACE BEFORE EACH NOTE
 for (int i = 0; i < (noteCounter * 2); i++)
@@ -679,7 +673,7 @@ for (int i = 0; i < (noteCounter * 2); i++)
     if ((i + 1) % 2 == 1)
         saronSlenthemPartDados[i] = '0';
     else if ((i + 1) % 2 == 0)
-        saronSlenthemPartDados[i] = saronSlenthemPartTanggung[((i + 1)/2) - 1];
+        saronSlenthemPartDados[i] = saronSlenthemPartTanggung[((i + 1) / 2) - 1];
 }
 
 //KENONG SAME BUT WITH MORE SPACE
@@ -1078,12 +1072,12 @@ void ChangePekingNotesBasedOnDifference(int pekingNoteUpIndex, int pekingNoteDow
         ChangePekingNotes(pekingCounter, howManyNotesBack, howManyPairs, firstPairOdd, pekingNoteUp, outNoteEven);
 }
 
-void GenerateDadosNotes(char[] partTanggung, char[] partDados, int index, int incrementLowerBound, int incrementUpperBound)
+void GenerateDadosNotes(char[] partTanggung, char[] partDados, int index, int dadosIncrementLowerBound, int dadosIncrementUpperBound, int tanggungIndexModifier, float tanggungIndexMultiplier, int tanggungInitialModifier)
 {
     int counter = 0;
-    for (int j = incrementLowerBound; j <= incrementUpperBound; j++)
+    for (int j = dadosIncrementLowerBound; j <= dadosIncrementUpperBound; j++)
     {
-        partDados[index + j] = partTanggung[index + counter];
+        partDados[index + j] = partTanggung[(int)((index + tanggungIndexModifier) * tanggungIndexMultiplier) + tanggungInitialModifier + counter];
         counter++;
     }
 }
