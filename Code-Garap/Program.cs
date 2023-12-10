@@ -315,7 +315,7 @@ if (userIrama == "tanggung")
                     GenerateBonangPanerusNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 1), FindPreviousNonZero(generateCounter - 1));
                 else
                     GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
-                
+
                 /*bool foundNonZero = false;
 
                 for (int i = (generateCounter - 1); i >= 0; i--)
@@ -362,7 +362,7 @@ if (userIrama == "tanggung")
                     GenerateBonangBarungNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 2), userInputArr[generateCounter - 1]);
                 else
                     GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
-                
+
                 /*bool foundNonZero = false;
 
                 for (int i = (generateCounter - 2); i >= 0; i--)
@@ -513,10 +513,10 @@ if (userIrama == "tanggung")
 
                 if (pekingNotePrevious == pekingNoteUp)
                     ChangePekingNotes(pekingCounter, 2, 1, true, pekingNoteDown);
-                
+
                 else if (pekingNotePrevious == pekingNoteDown)
                     ChangePekingNotes(pekingCounter, 2, 1, true, pekingNoteUp);
-                
+
                 else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
                 {
                     for (int i = 0; i < chosenPathet.Length; i++)
@@ -577,10 +577,10 @@ if (userIrama == "tanggung")
 
                 if (pekingNotePrevious == pekingNoteUp)
                     ChangePekingNotes(pekingCounter, 4, 1, true, pekingNoteDown);
-                
+
                 else if (pekingNotePrevious == pekingNoteDown)
                     ChangePekingNotes(pekingCounter, 4, 1, true, pekingNoteUp);
-                
+
                 else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
                 {
                     for (int i = 0; i < chosenPathet.Length; i++)
@@ -654,7 +654,7 @@ if (userIrama == "tanggung")
 
                     else if (chosenPathet[i] == pekingNoteDown)
                         pekingNoteDownIndex = i;
-                }  
+                }
                 ChangePekingNotesBasedOnDifference(pekingNoteUpIndex, pekingNoteDownIndex, pekingNotePreviousIndex, pekingCounter, 8, 3, true, pekingNoteUp, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
             }
         }
@@ -683,7 +683,13 @@ if (userIrama == "tanggung")
         {
             if (note == '0')
             {
-                bool foundNonZero = false;
+                if (FindPreviousNonZero(generateCounter - 1) != '0')
+                    kenongPartTanggung[generateCounter - 1] = FindPreviousNonZero(generateCounter - 1);
+                else
+                    kenongPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
+
+
+                /*bool foundNonZero = false;
 
                 for (int i = (generateCounter - 1); i >= 0; i--)
                 {
@@ -695,7 +701,7 @@ if (userIrama == "tanggung")
                     }
                 }
                 if (!foundNonZero)
-                    kenongPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
+                    kenongPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];*/
             }
             else
                 kenongPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 1];
@@ -715,37 +721,37 @@ if (userIrama == "tanggung")
     generateCounter = 0;
     foreach (char note in userInputArr)
     {
-        if (note == '1' || note == '2' || note == '3' || note == '4' || note == '5' || note == '6' || note == '7' || note == '0')
+        generateCounter++;
+        if (generateCounter >= 12 && (generateCounter - 4) % 8 == 0)
         {
-            generateCounter++;
-
-            if (generateCounter >= 12 && (generateCounter - 4) % 8 == 0)
+            if (note == '0')
             {
-                if (note == '0')
-                {
-                    bool foundNonZero = false;
-
-                    for (int i = (generateCounter - 1); i >= 0; i--)
-                    {
-                        if (userInputArr[i] != '0')
-                        {
-                            kempulPartTanggung[generateCounter - 1] = userInputArr[i];
-                            foundNonZero = true;
-                            break;
-                        }
-                    }
-                    if (!foundNonZero)
-                        kempulPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];  
-                }
+                if (FindPreviousNonZero(generateCounter - 1) != '0')
+                    kempulPartTanggung[generateCounter - 1] = FindPreviousNonZero(generateCounter - 1);
                 else
-                    kempulPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 1];
+                    kempulPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
+
+                /*bool foundNonZero = false;
+
+                for (int i = (generateCounter - 1); i >= 0; i--)
+                {
+                    if (userInputArr[i] != '0')
+                    {
+                        kempulPartTanggung[generateCounter - 1] = userInputArr[i];
+                        foundNonZero = true;
+                        break;
+                    }
+                }
+                if (!foundNonZero)
+                    kempulPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];*/
             }
             else
-                kempulPartTanggung[generateCounter - 1] = '0';
+                kempulPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 1];
         }
+        else
+            kempulPartTanggung[generateCounter - 1] = '0';
     }
 
-    //KEMPUL DISPLAY
     Console.WriteLine("\n\nKempul:");
     Console.Write($" (gong) ");
     DisplayPart(kempulPartTanggung, 4);
