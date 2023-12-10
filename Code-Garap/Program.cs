@@ -678,21 +678,18 @@ string GetUserLaras(string input)
         return "pelog";
     }
     else
-    {
         throw new ArgumentException($"Sorry but \"{input}\" is not a valid option. Please choose the laras of your balungan: enter \"1\" for slendro or \"2\" for pelog.\n");
-    }
+    
 }
 
 void DisplayPathetOptions(string laras)
 {
     if (laras == "slendro")
-    {
         Console.WriteLine("(Slendro: enter \"1\" for manyura, \"2\" for sanga, or \"3\" for nem)\n");
-    }
+    
     else if (laras == "pelog")
-    {
         Console.WriteLine("(Pelog: enter \"1\" for barang, \"2\" for nem, or \"3\" for lima)\n");
-    }
+    
 }
 
 string GetUserPathet(string input)
@@ -709,7 +706,7 @@ string GetUserPathet(string input)
             throw;
         }
     }
-    else if (userLaras == "pelog")
+    else
     {
         try
         {
@@ -721,8 +718,6 @@ string GetUserPathet(string input)
             throw;
         }
     }
-    //should be impossible to reach this line
-    throw new ArgumentException($"Laras is invalid. A bug has occurred - the laras cannot be invalid at this point.");
 }
 
 string CheckSlendroPathet(string input)
@@ -751,7 +746,6 @@ string CheckPelogPathet(string input)
             chosenPathet = pathetPelogBarang;
             return "barang";
         case "2":
-
             chosenPathet = pathetPelogNem;
             return "nem";
         case "3":
@@ -803,9 +797,7 @@ void CheckPathetValid(char[] balungan, char[] pathet)
         if (ch != '0')
         {
             if (!chosenPathet.Contains(ch))
-            {
                 throw new FormatException($"\"{ch}\" is not a valid note for {userLaras} {userPathet}. Please enter a balungan in {userLaras} {userPathet}.\nValid notes:");
-            }
         }
     }
     return;
@@ -836,35 +828,27 @@ bool CheckLengthAndSeleh(char[] balungan, char[] pathet, int noteAmount)
 void CheckLength(int noteAmount)
 {
     if (noteAmount != 16 && noteAmount != 32 && noteAmount != 64)
-    {
         throw new ArgumentException($"Sorry but you have not used the specified amount of notes/gatra. You have used {noteCounter} notes and {userTotalGatras} whole gatra of 4 notes each.\nPlease enter a balungan with a length of either 4, 8, or 16 full gatra of 4 notes each (using \"0\" as a rest).\n");
-    }
     return;
 }
 
 void CheckSeleh(char[] balungan, char[] pathet, int noteAmount)
 {
     if (balungan[noteAmount - 1] != pathet[0])
-    {
         throw new ArgumentException($"Your final seleh is the note \"{userInputArr[noteCounter - 1]}\". For {userLaras} {userPathet}, Please enter a balungan where the final note is {chosenPathet[0]}.\n");
-    }
     return;
 }
 
 void NoteFourWarning(char[] balungan, char[] pathet)
 {
     if (CheckNoteFour(balungan, pathet))
-    {
         Console.WriteLine("Warning - the pelog note 4 is used in this balungan. Currently this program may produce results that do not reflect proper garap involving note 4, especially when used as a seleh.");
-    }
 }
 
 bool CheckNoteFour(char[] balungan, char[] pathet)
 {
     if (pathet.Contains('4') && balungan.Contains('4'))
-    {
         return true;
-    }
     return false;
 }
 
@@ -897,17 +881,11 @@ void DisplayBalungan(char[] balungan)
     {
         displayCounter++;
         if (ch != '0')
-        {
             Console.Write(ch);
-        }
         else
-        {
             Console.Write("-");
-        }
         if ((displayCounter) % 4 == 0)
-        {
             Console.Write(" ");
-        }
     }
 }
 
@@ -1037,22 +1015,14 @@ void DisplayPart(char[] part, int notesPerGatra)
     foreach (char note in part)
     {
         if (note == '0')
-        {
             Console.Write("-");
-        }
         else
-        {
             Console.Write(note);
-        }
 
         displayCounter++;
         if (displayCounter >= 128 && (displayCounter) % 128 == 0 && displayCounter != part.Length)
-        {
             Console.Write("\n\t");
-        }
         else if ((displayCounter) % notesPerGatra == 0)
-        {
             Console.Write(" ");
-        }
     }
 }
