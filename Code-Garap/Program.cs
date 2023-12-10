@@ -250,286 +250,195 @@ char[] saronSlenthemPartTanggung = new char[noteCounter];
 char[] kenongPartTanggung = new char[noteCounter];
 char[] kempulPartTanggung = new char[noteCounter];
 
-char[] pekingPartDados = new char[noteCounter * 4];
-char[] bonangPanerusPartDados = new char[noteCounter * 8];
-char[] bonangBarungPartDados = new char[noteCounter * 4];
-char[] saronSlenthemPartDados = new char[noteCounter * 2];
-char[] kenongPartDados = new char[noteCounter * 2];
-char[] kempulPartDados = new char[noteCounter * 2];
-
 //GENERATING AND DISPLAYING EACH PART IN TANGGUNG
-if (userIrama == "tanggung")
+
+//BONANG PANERUS GENERATION
+//Bonang panerus plays at a speed of 4 notes per beat, with a doubled-up 0aba pattern once per beat e.g. 0aba0aba0cdc0cdc for gatra abcd.
+//The pattern happens before the beat instead of afterwards (0 a b a BEATA a b a BEATB - rather than - BEATA a b a BEATB a b a ).
+//Instead of using a rest note (0), the bonang uses the previous note that is not a 0, or the final seleh note if there is none.
+//One exception is that the bonang panerus (and barung) play the final seleh on the beat instead of a rest.
+
+int generateCounter = 0;
+foreach (char note in userInputArr)
 {
-    //BONANG PANERUS GENERATION
-    //Bonang panerus plays at a speed of 4 notes per beat, with a doubled-up 0aba pattern once per beat e.g. 0aba0aba0cdc0cdc for gatra abcd.
-    //The pattern happens before the beat instead of afterwards (0 a b a BEATA a b a BEATB - rather than - BEATA a b a BEATB a b a ).
-    //Instead of using a rest note (0), the bonang uses the previous note that is not a 0, or the final seleh note if there is none.
-    //One exception is that the bonang panerus (and barung) play the final seleh on the beat instead of a rest.
-
-    int generateCounter = 0;
-    foreach (char note in userInputArr)
+    generateCounter++;
+    if (generateCounter % 2 == 0)
     {
-        generateCounter++;
-        if (generateCounter % 2 == 0)
+        if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] != '0'))
         {
-            if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] != '0'))
-            {
-                if (FindPreviousNonZero(generateCounter - 2) != '0')
-                    GenerateBonangPanerusNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 2), userInputArr[generateCounter - 1]);
-                else
-                    GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
-            }
-
-            else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
-            {
-                if (FindPreviousNonZero(generateCounter - 1) != '0')
-                    GenerateBonangPanerusNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 1), FindPreviousNonZero(generateCounter - 1));
-                else
-                    GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
-            }
-
-            else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
-                GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
-
+            if (FindPreviousNonZero(generateCounter - 2) != '0')
+                GenerateBonangPanerusNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 2), userInputArr[generateCounter - 1]);
             else
-                GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
+                GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
         }
-    }
 
-    GenerateBonangPanerusNotes(generateCounter, 4, -4, -1, bonangPanerusPartTanggung[1], bonangPanerusPartTanggung[2], userInputArr[noteCounter - 1]);
-
-    Console.WriteLine("\n\nBonang Panerus:");
-    Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartTanggung[1]}{bonangPanerusPartTanggung[2]}{bonangPanerusPartTanggung[1]})");
-    Console.Write("\t");
-    DisplayPart(bonangPanerusPartTanggung, 16);
-
-
-    //BONANG BARUNG GENERATION
-    //Bonang barung plays at the a speed of 2 notes per beat. It plays the same pattern as the bonang panerus but at half speed, and only one occurance of each.
-    //Instead of using a rest note (0), the bonang uses the previous note that is not a 0, or the final seleh note if there is none.
-    generateCounter = 0;
-    foreach (char note in userInputArr)
-    {
-        generateCounter++;
-        if (generateCounter % 2 == 0)
+        else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
         {
-            if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] != '0'))
-            {
-                if (FindPreviousNonZero(generateCounter - 2) != '0')
-                    GenerateBonangBarungNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 2), userInputArr[generateCounter - 1]);
-                else
-                    GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
-            }
-            else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
-            {
-                if (FindPreviousNonZero(generateCounter - 1) != '0')
-                    GenerateBonangBarungNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 1), FindPreviousNonZero(generateCounter - 1));
-                else
-                    GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
-            }
-            else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
-                GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
-
+            if (FindPreviousNonZero(generateCounter - 1) != '0')
+                GenerateBonangPanerusNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 1), FindPreviousNonZero(generateCounter - 1));
             else
-                GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
+                GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
         }
-    }
 
-    bonangBarungPartTanggung[(generateCounter * 2) - 2] = userInputArr[noteCounter - 1];
-
-    if (userInputArr[0] != '0')
-        bonangBarungPartTanggung[(generateCounter * 2) - 1] = userInputArr[0];
-    
-    else if (userInputArr[0] == '0')
-        bonangBarungPartTanggung[(generateCounter * 2) - 1] = chosenPathet[0];
-    
-    Console.WriteLine("\n\nBonang Barung:");
-    if (userInputArr[0] != '0')
-        Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[0]})");
-    
-    else if (userInputArr[0] == '0')
-        Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]})");
-    
-    Console.Write("\t");
-    DisplayPart(bonangBarungPartTanggung, 8);
-
-
-    //PEKING GENERATION
-    //Each note is doubled up in tanggung at twice the speed of the saron/slenthem. The peking plays continuously, including over rests.
-    //(the surakarta style that this code uses is a change of note on the beat, whereas yogyanese style is a change of note a half-beat before).
-
-    generateCounter = 0;
-    foreach (char note in userInputArr)
-    {
-        if (note == '0')
-        {
-            generateCounter++;
-            if (generateCounter == 1)
-            {
-                pekingPartTanggung[(generateCounter * 2) - 2] = userInputArr[noteCounter - 1];
-                pekingPartTanggung[(generateCounter * 2) - 1] = userInputArr[noteCounter - 1];
-            }
-            else if (generateCounter > 1)
-            {
-                pekingPartTanggung[(generateCounter * 2) - 2] = pekingPartTanggung[(generateCounter * 2) - 3];
-                pekingPartTanggung[(generateCounter * 2) - 1] = pekingPartTanggung[(generateCounter * 2) - 3];
-            }
-        }
+        else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
+            GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
 
         else
+            GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
+    }
+}
+GenerateBonangPanerusNotes(generateCounter, 4, -4, -1, bonangPanerusPartTanggung[1], bonangPanerusPartTanggung[2], userInputArr[noteCounter - 1]);
+
+//BONANG BARUNG GENERATION
+//Bonang barung plays at the a speed of 2 notes per beat. It plays the same pattern as the bonang panerus but at half speed, and only one occurance of each.
+//Instead of using a rest note (0), the bonang uses the previous note that is not a 0, or the final seleh note if there is none.
+generateCounter = 0;
+foreach (char note in userInputArr)
+{
+    generateCounter++;
+    if (generateCounter % 2 == 0)
+    {
+        if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] != '0'))
         {
-            generateCounter++;
-            pekingPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
-            pekingPartTanggung[(generateCounter * 2) - 1] = userInputArr[generateCounter - 1];
+            if (FindPreviousNonZero(generateCounter - 2) != '0')
+                GenerateBonangBarungNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 2), userInputArr[generateCounter - 1]);
+            else
+                GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
+        }
+        else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
+        {
+            if (FindPreviousNonZero(generateCounter - 1) != '0')
+                GenerateBonangBarungNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 1), FindPreviousNonZero(generateCounter - 1));
+            else
+                GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
+        }
+        else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
+            GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
+
+        else
+            GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 1]);
+    }
+}
+bonangBarungPartTanggung[(generateCounter * 2) - 2] = userInputArr[noteCounter - 1];
+if (userInputArr[0] != '0')
+    bonangBarungPartTanggung[(generateCounter * 2) - 1] = userInputArr[0];
+else if (userInputArr[0] == '0')
+    bonangBarungPartTanggung[(generateCounter * 2) - 1] = chosenPathet[0];
+
+//PEKING GENERATION
+//Each note is doubled up in tanggung at twice the speed of the saron/slenthem. The peking plays continuously, including over rests.
+//(the surakarta style that this code uses is a change of note on the beat, whereas yogyanese style is a change of note a half-beat before).
+
+generateCounter = 0;
+foreach (char note in userInputArr)
+{
+    if (note == '0')
+    {
+        generateCounter++;
+        if (generateCounter == 1)
+        {
+            pekingPartTanggung[(generateCounter * 2) - 2] = userInputArr[noteCounter - 1];
+            pekingPartTanggung[(generateCounter * 2) - 1] = userInputArr[noteCounter - 1];
+        }
+        else if (generateCounter > 1)
+        {
+            pekingPartTanggung[(generateCounter * 2) - 2] = pekingPartTanggung[(generateCounter * 2) - 3];
+            pekingPartTanggung[(generateCounter * 2) - 1] = pekingPartTanggung[(generateCounter * 2) - 3];
         }
     }
 
-    //CORRECTIONS FOR PEKINGAN RULES
-    //Note: You cannot play two pairs of the same note consecutively. Some extra statements have been added for this below.
-    int pekingCounter = 0;
-    foreach (char note in pekingPartTanggung)
+    else
     {
-        pekingCounter++;
-        char pekingNoteUp = '0';
-        char pekingNoteDown = '0';
-        char pekingNotePrevious = '0';
-        char pekingNotePreviousSpecial = '0';
-        int pekingNoteUpIndex = 0;
-        int pekingNoteDownIndex = 0;
-        int pekingNotePreviousIndex = 0;
+        generateCounter++;
+        pekingPartTanggung[(generateCounter * 2) - 2] = userInputArr[generateCounter - 1];
+        pekingPartTanggung[(generateCounter * 2) - 1] = userInputArr[generateCounter - 1];
+    }
+}
 
-        //Looking at (double) notes 1 and 3 in each gatra - these are the notes that change
-        if (pekingCounter % 2 == 0 && pekingCounter % 4 != 0)
+//CORRECTIONS FOR PEKINGAN RULES
+//Note: You cannot play two pairs of the same note consecutively. Some extra statements have been added for this below.
+int pekingCounter = 0;
+foreach (char note in pekingPartTanggung)
+{
+    pekingCounter++;
+    char pekingNoteUp = '0';
+    char pekingNoteDown = '0';
+    char pekingNotePrevious = '0';
+    char pekingNotePreviousSpecial = '0';
+    int pekingNoteUpIndex = 0;
+    int pekingNoteDownIndex = 0;
+    int pekingNotePreviousIndex = 0;
+
+    //Looking at (double) notes 1 and 3 in each gatra - these are the notes that change
+    if (pekingCounter % 2 == 0 && pekingCounter % 4 != 0)
+    {
+        if (pekingCounter > 2 && pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingCounter - 3])
+            pekingNotePreviousSpecial = pekingPartTanggung[pekingCounter - 3];
+
+        if (pekingCounter == 2 && pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingPartTanggung.Length - 1])
+            pekingNotePreviousSpecial = pekingPartTanggung[pekingPartTanggung.Length - 1];
+
+        if (pekingPartTanggung[pekingCounter - 1] == pekingNotePreviousSpecial)
         {
-            if (pekingCounter > 2 && pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingCounter - 3])
-                pekingNotePreviousSpecial = pekingPartTanggung[pekingCounter - 3];
+            for (int i = 0; i < chosenPathet.Length; i++)
+            {
+                if (chosenPathet[i] == pekingPartTanggung[pekingCounter + 1])
+                {
+                    if (i != 0 && i != chosenPathet.Length - 1)
+                    {
+                        pekingNoteUp = chosenPathet[i + 1];
+                        pekingNoteDown = chosenPathet[i - 1];
+                    }
+                    else if (i == 0)
+                    {
+                        pekingNoteUp = chosenPathet[i + 1];
+                        pekingNoteDown = chosenPathet[chosenPathet.Length - 1];
+                    }
+                    else if (i == chosenPathet.Length - 1)
+                    {
+                        pekingNoteUp = chosenPathet[0];
+                        pekingNoteDown = chosenPathet[i - 1];
+                    }
+                }
+            }
 
-            if (pekingCounter == 2 && pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingPartTanggung.Length - 1])
-                pekingNotePreviousSpecial = pekingPartTanggung[pekingPartTanggung.Length - 1];
+            pekingNotePrevious = pekingPartTanggung[pekingCounter - 1];
 
-            if (pekingPartTanggung[pekingCounter - 1] == pekingNotePreviousSpecial)
+            if (pekingNotePrevious == pekingNoteUp)
+                ChangePekingNotes(pekingCounter, 2, 1, true, pekingNoteDown);
+
+            else if (pekingNotePrevious == pekingNoteDown)
+                ChangePekingNotes(pekingCounter, 2, 1, true, pekingNoteUp);
+
+            else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
             {
                 for (int i = 0; i < chosenPathet.Length; i++)
                 {
-                    if (chosenPathet[i] == pekingPartTanggung[pekingCounter + 1])
-                    {
-                        if (i != 0 && i != chosenPathet.Length - 1)
-                        {
-                            pekingNoteUp = chosenPathet[i + 1];
-                            pekingNoteDown = chosenPathet[i - 1];
-                        }
-                        else if (i == 0)
-                        {
-                            pekingNoteUp = chosenPathet[i + 1];
-                            pekingNoteDown = chosenPathet[chosenPathet.Length - 1];
-                        }
-                        else if (i == chosenPathet.Length - 1)
-                        {
-                            pekingNoteUp = chosenPathet[0];
-                            pekingNoteDown = chosenPathet[i - 1];
-                        }
-                    }
+                    if (chosenPathet[i] == pekingNotePrevious)
+                        pekingNotePreviousIndex = i;
+
+                    else if (chosenPathet[i] == pekingNoteUp)
+                        pekingNoteUpIndex = i;
+
+                    else if (chosenPathet[i] == pekingNoteDown)
+                        pekingNoteDownIndex = i;
                 }
-
-                pekingNotePrevious = pekingPartTanggung[pekingCounter - 1];
-
-                if (pekingNotePrevious == pekingNoteUp)
-                    ChangePekingNotes(pekingCounter, 2, 1, true, pekingNoteDown);
-
-                else if (pekingNotePrevious == pekingNoteDown)
-                    ChangePekingNotes(pekingCounter, 2, 1, true, pekingNoteUp);
-
-                else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
-                {
-                    for (int i = 0; i < chosenPathet.Length; i++)
-                    {
-                        if (chosenPathet[i] == pekingNotePrevious)
-                            pekingNotePreviousIndex = i;
-
-                        else if (chosenPathet[i] == pekingNoteUp)
-                            pekingNoteUpIndex = i;
-
-                        else if (chosenPathet[i] == pekingNoteDown)
-                            pekingNoteDownIndex = i;
-                    }
-                    ChangePekingNotesBasedOnDifference(pekingNoteUpIndex, pekingNoteDownIndex, pekingNotePreviousIndex, pekingCounter, 2, 1, true, pekingNoteUp, pekingNoteDown);
-                }
+                ChangePekingNotesBasedOnDifference(pekingNoteUpIndex, pekingNoteDownIndex, pekingNotePreviousIndex, pekingCounter, 2, 1, true, pekingNoteUp, pekingNoteDown);
             }
         }
+    }
 
-        pekingNoteUp = '0';
-        pekingNoteDown = '0';
-        pekingNotePrevious = '0';
-        pekingNoteUpIndex = 0;
-        pekingNoteDownIndex = 0;
-        pekingNotePreviousIndex = 0;
+    pekingNoteUp = '0';
+    pekingNoteDown = '0';
+    pekingNotePrevious = '0';
+    pekingNoteUpIndex = 0;
+    pekingNoteDownIndex = 0;
+    pekingNotePreviousIndex = 0;
 
-        //Looking at (double) notes 2 and 4 in each gatra - trying to find pairs
-        if (pekingCounter % 4 == 0)
-        {
-            if (pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingCounter - 3])
-            {
-                for (int i = 0; i < chosenPathet.Length; i++)
-                {
-                    if (chosenPathet[i] == pekingPartTanggung[pekingCounter - 1])
-                    {
-                        if (i != 0 && i != chosenPathet.Length - 1)
-                        {
-                            pekingNoteUp = chosenPathet[i + 1];
-                            pekingNoteDown = chosenPathet[i - 1];
-                        }
-                        else if (i == 0)
-                        {
-                            pekingNoteUp = chosenPathet[i + 1];
-                            pekingNoteDown = chosenPathet[chosenPathet.Length - 1];
-                        }
-                        else if (i == chosenPathet.Length - 1)
-                        {
-                            pekingNoteUp = chosenPathet[0];
-                            pekingNoteDown = chosenPathet[i - 1];
-                        }
-                    }
-                }
-
-                if (pekingCounter > 4)
-                    pekingNotePrevious = pekingPartTanggung[pekingCounter - 5];
-
-                else if (pekingCounter == 4)
-                    pekingNotePrevious = pekingPartTanggung[pekingPartTanggung.Length - 1];
-
-                if (pekingNotePrevious == pekingNoteUp)
-                    ChangePekingNotes(pekingCounter, 4, 1, true, pekingNoteDown);
-
-                else if (pekingNotePrevious == pekingNoteDown)
-                    ChangePekingNotes(pekingCounter, 4, 1, true, pekingNoteUp);
-
-                else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
-                {
-                    for (int i = 0; i < chosenPathet.Length; i++)
-                    {
-                        if (chosenPathet[i] == pekingNotePrevious)
-                            pekingNotePreviousIndex = i;
-
-                        else if (chosenPathet[i] == pekingNoteUp)
-                            pekingNoteUpIndex = i;
-
-                        else if (chosenPathet[i] == pekingNoteDown)
-                            pekingNoteDownIndex = i;
-                    }
-                    ChangePekingNotesBasedOnDifference(pekingNoteUpIndex, pekingNoteDownIndex, pekingNotePreviousIndex, pekingCounter, 4, 1, true, pekingNoteUp, pekingNoteDown);
-                }
-            }
-        }
-
-        pekingNoteUp = '0';
-        pekingNoteDown = '0';
-        pekingNotePrevious = '0';
-        pekingNoteUpIndex = 0;
-        pekingNoteDownIndex = 0;
-        pekingNotePreviousIndex = 0;
-
-        //Looking at the entire gatra to see if the second and third (double) notes are the same (if so, the whole gatra changes to 'anticipate' the seleh).
-        if (pekingCounter % 8 == 0 && pekingPartTanggung[pekingCounter - 4] == pekingPartTanggung[pekingCounter - 6])
+    //Looking at (double) notes 2 and 4 in each gatra - trying to find pairs
+    if (pekingCounter % 4 == 0)
+    {
+        if (pekingPartTanggung[pekingCounter - 1] == pekingPartTanggung[pekingCounter - 3])
         {
             for (int i = 0; i < chosenPathet.Length; i++)
             {
@@ -552,17 +461,18 @@ if (userIrama == "tanggung")
                     }
                 }
             }
-            if (pekingCounter > 8)
-                pekingNotePrevious = pekingPartTanggung[pekingCounter - 9];
 
-            else if (pekingCounter == 8)
+            if (pekingCounter > 4)
+                pekingNotePrevious = pekingPartTanggung[pekingCounter - 5];
+
+            else if (pekingCounter == 4)
                 pekingNotePrevious = pekingPartTanggung[pekingPartTanggung.Length - 1];
 
             if (pekingNotePrevious == pekingNoteUp)
-                ChangePekingNotes(pekingCounter, 8, 3, true, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
+                ChangePekingNotes(pekingCounter, 4, 1, true, pekingNoteDown);
 
             else if (pekingNotePrevious == pekingNoteDown)
-                ChangePekingNotes(pekingCounter, 8, 3, true, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
+                ChangePekingNotes(pekingCounter, 4, 1, true, pekingNoteUp);
 
             else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
             {
@@ -577,82 +487,165 @@ if (userIrama == "tanggung")
                     else if (chosenPathet[i] == pekingNoteDown)
                         pekingNoteDownIndex = i;
                 }
-                ChangePekingNotesBasedOnDifference(pekingNoteUpIndex, pekingNoteDownIndex, pekingNotePreviousIndex, pekingCounter, 8, 3, true, pekingNoteUp, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
+                ChangePekingNotesBasedOnDifference(pekingNoteUpIndex, pekingNoteDownIndex, pekingNotePreviousIndex, pekingCounter, 4, 1, true, pekingNoteUp, pekingNoteDown);
             }
         }
     }
 
-    Console.WriteLine("\n\nPeking:");
-    Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]}) ");
-    DisplayPart(pekingPartTanggung, 8);
+    pekingNoteUp = '0';
+    pekingNoteDown = '0';
+    pekingNotePrevious = '0';
+    pekingNoteUpIndex = 0;
+    pekingNoteDownIndex = 0;
+    pekingNotePreviousIndex = 0;
 
-
-    //SARON AND SLENTHEM GENERATION
-    //Saron and slenthem play the balungan verbatim.
-    saronSlenthemPartTanggung = userInputArr;
-    Console.WriteLine("\n\nSaron and Slenthem:");
-    Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
-    DisplayPart(saronSlenthemPartTanggung, 4);
-
-
-    //KENONG GENERATION
-    //Kenong plays on the even seleh in tanggung - if the place of the note in sequence is divisible by 8, write it verbatim in the part. Otherwise, write rests (0).
-    generateCounter = 0;
-    foreach (char note in userInputArr)
+    //Looking at the entire gatra to see if the second and third (double) notes are the same (if so, the whole gatra changes to 'anticipate' the seleh).
+    if (pekingCounter % 8 == 0 && pekingPartTanggung[pekingCounter - 4] == pekingPartTanggung[pekingCounter - 6])
     {
-        generateCounter++;
-        if (generateCounter % 8 == 0)
+        for (int i = 0; i < chosenPathet.Length; i++)
         {
-            if (note == '0')
+            if (chosenPathet[i] == pekingPartTanggung[pekingCounter - 1])
             {
-                if (FindPreviousNonZero(generateCounter - 1) != '0')
-                    kenongPartTanggung[generateCounter - 1] = FindPreviousNonZero(generateCounter - 1);
-                else
-                    kenongPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
+                if (i != 0 && i != chosenPathet.Length - 1)
+                {
+                    pekingNoteUp = chosenPathet[i + 1];
+                    pekingNoteDown = chosenPathet[i - 1];
+                }
+                else if (i == 0)
+                {
+                    pekingNoteUp = chosenPathet[i + 1];
+                    pekingNoteDown = chosenPathet[chosenPathet.Length - 1];
+                }
+                else if (i == chosenPathet.Length - 1)
+                {
+                    pekingNoteUp = chosenPathet[0];
+                    pekingNoteDown = chosenPathet[i - 1];
+                }
             }
-            else
-                kenongPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 1];
         }
-        else
-            kenongPartTanggung[generateCounter - 1] = '0';
-    }
+        if (pekingCounter > 8)
+            pekingNotePrevious = pekingPartTanggung[pekingCounter - 9];
 
-    Console.WriteLine("\n\nKenong:");
-    Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
-    DisplayPart(kenongPartTanggung, 4);
+        else if (pekingCounter == 8)
+            pekingNotePrevious = pekingPartTanggung[pekingPartTanggung.Length - 1];
 
+        if (pekingNotePrevious == pekingNoteUp)
+            ChangePekingNotes(pekingCounter, 8, 3, true, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
 
-    //KEMPUL GENERATION
-    //the kempul plays on the odd seleh in tangung (but not the first!) - THIS IS ASSUMING THAT THE GAMELAN HAS A KEMPUL OF EVERY PITCH - WHICH IS BASICALLY NEVER TRUE.
-    //!!!NEW RULE!!! THE KEMPUL CANNOT PLAY ON SELEH 4
-    generateCounter = 0;
-    foreach (char note in userInputArr)
-    {
-        generateCounter++;
-        if (generateCounter >= 12 && (generateCounter - 4) % 8 == 0)
+        else if (pekingNotePrevious == pekingNoteDown)
+            ChangePekingNotes(pekingCounter, 8, 3, true, pekingNoteUp, pekingPartTanggung[pekingCounter - 1]);
+
+        else if (pekingNotePrevious != pekingNoteUp && pekingNotePrevious != pekingNoteDown)
         {
-            if (note == '0')
+            for (int i = 0; i < chosenPathet.Length; i++)
             {
-                if (FindPreviousNonZero(generateCounter - 1) != '0')
-                    kempulPartTanggung[generateCounter - 1] = FindPreviousNonZero(generateCounter - 1);
-                else
-                    kempulPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
-            }
-            else
-                kempulPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 1];
-        }
-        else
-            kempulPartTanggung[generateCounter - 1] = '0';
-    }
+                if (chosenPathet[i] == pekingNotePrevious)
+                    pekingNotePreviousIndex = i;
 
-    Console.WriteLine("\n\nKempul:");
-    Console.Write($" (gong) ");
-    DisplayPart(kempulPartTanggung, 4);
+                else if (chosenPathet[i] == pekingNoteUp)
+                    pekingNoteUpIndex = i;
+
+                else if (chosenPathet[i] == pekingNoteDown)
+                    pekingNoteDownIndex = i;
+            }
+            ChangePekingNotesBasedOnDifference(pekingNoteUpIndex, pekingNoteDownIndex, pekingNotePreviousIndex, pekingCounter, 8, 3, true, pekingNoteUp, pekingNoteDown, pekingPartTanggung[pekingCounter - 1]);
+        }
+    }
 }
 
-//IMPORTANT: PEKINGAN IN DADOS DOESN'T JUST REPEAT THE SAME NOTE OVER AND OVER
+//SARON AND SLENTHEM GENERATION
+//Saron and slenthem play the balungan verbatim.
+saronSlenthemPartTanggung = userInputArr;
+
+//KENONG GENERATION
+//Kenong plays on the even seleh in tanggung - if the place of the note in sequence is divisible by 8, write it verbatim in the part. Otherwise, write rests (0).
+generateCounter = 0;
+foreach (char note in userInputArr)
+{
+    generateCounter++;
+    if (generateCounter % 8 == 0)
+    {
+        if (note == '0')
+        {
+            if (FindPreviousNonZero(generateCounter - 1) != '0')
+                kenongPartTanggung[generateCounter - 1] = FindPreviousNonZero(generateCounter - 1);
+            else
+                kenongPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
+        }
+        else
+            kenongPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 1];
+    }
+    else
+        kenongPartTanggung[generateCounter - 1] = '0';
+}
+
+//KEMPUL GENERATION
+//the kempul plays on the odd seleh in tangung (but not the first!) - THIS IS ASSUMING THAT THE GAMELAN HAS A KEMPUL OF EVERY PITCH - WHICH IS BASICALLY NEVER TRUE.
+//!!!NEW RULE!!! THE KEMPUL CANNOT PLAY ON SELEH 4
+generateCounter = 0;
+foreach (char note in userInputArr)
+{
+    generateCounter++;
+    if (generateCounter >= 12 && (generateCounter - 4) % 8 == 0)
+    {
+        if (note == '0')
+        {
+            if (FindPreviousNonZero(generateCounter - 1) != '0')
+                kempulPartTanggung[generateCounter - 1] = FindPreviousNonZero(generateCounter - 1);
+            else
+                kempulPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
+        }
+        else
+            kempulPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 1];
+    }
+    else
+        kempulPartTanggung[generateCounter - 1] = '0';
+}
+
+Console.WriteLine("\n\nBonang Panerus:");
+Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartTanggung[1]}{bonangPanerusPartTanggung[2]}{bonangPanerusPartTanggung[1]})");
+Console.Write("\t");
+DisplayPart(bonangPanerusPartTanggung, 16);
+
+Console.WriteLine("\n\nBonang Barung:");
+if (userInputArr[0] != '0')
+    Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[0]})");
+else if (userInputArr[0] == '0')
+    Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]})");
+Console.Write("\t");
+DisplayPart(bonangBarungPartTanggung, 8);
+
+Console.WriteLine("\n\nPeking:");
+Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]}) ");
+DisplayPart(pekingPartTanggung, 8);
+
+Console.WriteLine("\n\nSaron and Slenthem:");
+Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
+DisplayPart(saronSlenthemPartTanggung, 4);
+
+Console.WriteLine("\n\nKenong:");
+Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
+DisplayPart(kenongPartTanggung, 4);
+
+Console.WriteLine("\n\nKempul:");
+Console.Write($" (gong) ");
+DisplayPart(kempulPartTanggung, 4);
+
+
+//IMPORTANT: PEKINGAN IN DADOS REPEATS EACH PAIR TWICE - ARE THERE EXCEPTIONS?
+//SARON/KENONG/KEMPUL ARE EASY (add a space before each note)
+//BONANG AND PEKING ARE ALSO FAIRLY EASY (double each pattern/pair)
+//TO GENERATE, USE THE TANGGUNG PARTS
 //GENERATING AND DISPLAYING EACH PART IN DADOS - UNDER CONSTRUCTION!!!
-else if (userIrama == "dados")
+
+char[] pekingPartDados = new char[noteCounter * 4];
+char[] bonangPanerusPartDados = new char[noteCounter * 8];
+char[] bonangBarungPartDados = new char[noteCounter * 4];
+char[] saronSlenthemPartDados = new char[noteCounter * 2];
+char[] kenongPartDados = new char[noteCounter * 2];
+char[] kempulPartDados = new char[noteCounter * 2];
+
+if (userIrama == "dados")
 {
     Console.WriteLine("(The parts displayed for irama dados are written in the same time-frame as tanggung to illustrate the difference between the two.)\n");
     Console.WriteLine("Dados is under construction. Please only use irama tanggung for now.\n");
@@ -679,17 +672,17 @@ string GetUserLaras(string input)
     }
     else
         throw new ArgumentException($"Sorry but \"{input}\" is not a valid option. Please choose the laras of your balungan: enter \"1\" for slendro or \"2\" for pelog.\n");
-    
+
 }
 
 void DisplayPathetOptions(string laras)
 {
     if (laras == "slendro")
         Console.WriteLine("(Slendro: enter \"1\" for manyura, \"2\" for sanga, or \"3\" for nem)\n");
-    
+
     else if (laras == "pelog")
         Console.WriteLine("(Pelog: enter \"1\" for barang, \"2\" for nem, or \"3\" for lima)\n");
-    
+
 }
 
 string GetUserPathet(string input)
