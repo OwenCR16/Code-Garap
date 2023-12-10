@@ -4,17 +4,12 @@
 // LADRANG PANKUR - SLENDRO MANYURA (CAN BE PUT IN OTHER PATHET/LARAS) - 3231 3216 1632 5321 3532 6532 5321 3216
 // GAMBIR SAWIT - SLENDRO SANGA - 0352 0356 2200 2321 0032 0126 2200 2321 0032 0165 0056 1653 0023 5321 6532 0165
 
-
 //TODO
-
-//CREATE METHODS FOR:
-//GENERATING PARTS - SIMILAR LOGIC BITS THAT APPEAR MULTIPLE TIMES IN GENERATION CODE BLOCKS
-//METHODS SHOULD GENERALLY BE 20-30 LINES MAX
-
+//OCTAVES CAN BE CUSTOMISED BY THE USER WHEN THEY WANT SOMETHING PLAYED BACK/PARTS PRINTED
 //CHAllENGE - FIND OUT HOW NOTE 4 WORKS IN PELOG PROPERLY AND ADD EXTRA RULES
 //EXCEPTION HANDLING CAN BE OPTIMISED IN FUTURE - TO SHOW ALL EXCEPTIONS INSTEAD OF JUST THE FIRST, TRY EACH SMALLER METHOD SEPARATELY
+//WRITE COMMENTS THROUGHOUT THE CODE EXPLAINING THINGS ABOUT GAMELAN TO OTHER READERS:
 
-//WRITE COMMENTS THROUGHOUT THE CODE EXPLAINING THINGS ABOUT GAMELAN OTHER READERS
 //The Javanese Gamelan uses 2 different sets of instruments with different tuning systems (laras) - slendro (using 5 notes labelled 12356) and pelog (using 7 notes labelled 1234567)
 char[] larasSlendro = { '1', '2', '3', '5', '6' };
 char[] larasPelog = { '1', '2', '3', '4', '5', '6', '7' };
@@ -263,15 +258,6 @@ char[] saronSlenthemPartDados = new char[noteCounter * 2];
 char[] kenongPartDados = new char[noteCounter * 2];
 char[] kempulPartDados = new char[noteCounter * 2];
 
-//DADOS
-
-//1) SARON/SLENTHEM
-//2) KENONG/KEMPUL
-//3) BONANG
-//4) PEKING (hard)
-
-//IGNORE OCTAVES FOR NOW - SHOULD BE OBVIOUS FROM PARTS
-
 //GENERATING AND DISPLAYING EACH PART IN TANGGUNG
 if (userIrama == "tanggung")
 {
@@ -293,20 +279,6 @@ if (userIrama == "tanggung")
                     GenerateBonangPanerusNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 2), userInputArr[generateCounter - 1]);
                 else
                     GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
-
-                /*bool foundNonZero = false;
-                for (int i = (generateCounter - 2); i >= 0; i--)
-                {
-                    if (userInputArr[i] != '0')
-                    {
-                        GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[i], userInputArr[generateCounter - 1]);
-                        foundNonZero = true;
-                        break;
-                    }
-                }
-                if (!foundNonZero)
-                    GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
-                */
             }
 
             else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
@@ -315,20 +287,6 @@ if (userIrama == "tanggung")
                     GenerateBonangPanerusNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 1), FindPreviousNonZero(generateCounter - 1));
                 else
                     GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
-
-                /*bool foundNonZero = false;
-
-                for (int i = (generateCounter - 1); i >= 0; i--)
-                {
-                    if (userInputArr[i] != '0')
-                    {
-                        GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[i], userInputArr[i]);
-                        foundNonZero = true;
-                        break;
-                    }
-                }
-                if (!foundNonZero)
-                    GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);*/
             }
 
             else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
@@ -362,20 +320,6 @@ if (userIrama == "tanggung")
                     GenerateBonangBarungNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 2), userInputArr[generateCounter - 1]);
                 else
                     GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
-
-                /*bool foundNonZero = false;
-
-                for (int i = (generateCounter - 2); i >= 0; i--)
-                {
-                    if (userInputArr[i] != '0')
-                    {
-                        GenerateBonangBarungNotesGroup(generateCounter, userInputArr[i], userInputArr[generateCounter - 1]);
-                        foundNonZero = true;
-                        break;
-                    }
-                }
-                if (!foundNonZero)
-                    GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);*/
             }
             else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
             {
@@ -383,20 +327,6 @@ if (userIrama == "tanggung")
                     GenerateBonangBarungNotesGroup(generateCounter, FindPreviousNonZero(generateCounter - 1), FindPreviousNonZero(generateCounter - 1));
                 else
                     GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
-
-                /*bool foundNonZero = false;
-
-                for (int i = (generateCounter - 1); i >= 0; i--)
-                {
-                    if (userInputArr[i] != '0')
-                    {
-                        GenerateBonangBarungNotesGroup(generateCounter, userInputArr[i], userInputArr[i]);
-                        foundNonZero = true;
-                        break;
-                    }
-                }
-                if (!foundNonZero)
-                    GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);*/
             }
             else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
                 GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
@@ -687,21 +617,6 @@ if (userIrama == "tanggung")
                     kenongPartTanggung[generateCounter - 1] = FindPreviousNonZero(generateCounter - 1);
                 else
                     kenongPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
-
-
-                /*bool foundNonZero = false;
-
-                for (int i = (generateCounter - 1); i >= 0; i--)
-                {
-                    if (userInputArr[i] != '0')
-                    {
-                        kenongPartTanggung[generateCounter - 1] = userInputArr[i];
-                        foundNonZero = true;
-                        break;
-                    }
-                }
-                if (!foundNonZero)
-                    kenongPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];*/
             }
             else
                 kenongPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 1];
@@ -730,20 +645,6 @@ if (userIrama == "tanggung")
                     kempulPartTanggung[generateCounter - 1] = FindPreviousNonZero(generateCounter - 1);
                 else
                     kempulPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];
-
-                /*bool foundNonZero = false;
-
-                for (int i = (generateCounter - 1); i >= 0; i--)
-                {
-                    if (userInputArr[i] != '0')
-                    {
-                        kempulPartTanggung[generateCounter - 1] = userInputArr[i];
-                        foundNonZero = true;
-                        break;
-                    }
-                }
-                if (!foundNonZero)
-                    kempulPartTanggung[generateCounter - 1] = userInputArr[noteCounter - 1];*/
             }
             else
                 kempulPartTanggung[generateCounter - 1] = userInputArr[generateCounter - 1];
@@ -918,7 +819,6 @@ void CheckPathetValid(char[] balungan, char[] pathet)
     return;
 }
 
-
 bool CheckLengthAndSeleh(char[] balungan, char[] pathet, int noteAmount)
 {
     try
@@ -1027,10 +927,6 @@ void TransposeBalungan(char[] balungan)
 
 //NOTE THAT FOR NOW THESE METHODS AND THEIR NAMES ONLY APPLY TO IRAMA TANGGUNG
 
-//if (method != '0')
-//  print option 1 (userInputArr[i] becomes method)
-//else
-// print option 2
 char FindPreviousNonZero(int initialIncrementValue)
 {
     for (int j = initialIncrementValue; j >= 0; j--)
