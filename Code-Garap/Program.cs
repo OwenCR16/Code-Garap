@@ -1261,7 +1261,7 @@ void GenerateBonangBarungNotes(int generateCounter, int generateCounterMultiplie
 
 
 //peking part gen
-
+/*
 void ChangePekingNotes(int pekingCounter, char outNoteOdd, char outNoteEven)
 {
     for (int j = -8; j <= -3; j++)
@@ -1273,18 +1273,33 @@ void ChangePekingNotes(int pekingCounter, char outNoteOdd, char outNoteEven)
             pekingPartTanggung[pekingCounter + j] = outNoteEven;
     }
 }
+*/
 
-//UNIVERSAL CHANGEPEKINGNOTES - CHANGE THE ABOVE TO THIS
-//BEING X=0 IF THE FIRST PAIR IS EVEN, AND X=2 IF THE FIRST PAIR IS ODD (how to do this?)
-//for (...)
-//x++ (counter)
-//if x%2 = 0 (for each pair of notes)
-//  if x == 2 (for the first odd pair)
-//      print outNoteOdd for both
-//  else if (x/2)%2 == 0 (if the pair is an even pair)
-//      print outNoteEven for both
-//  else (if the pair is an odd pair)
-//      print outNoteOdd for both
+void ChangePekingNotes(int pekingCounter, int howManyNotesBack, int howManyPairs, bool firstPairOdd, char outNoteOdd, char outNoteEven = '0')
+{
+    //Only used for up to three pairs - the first pair is always odd
+    int x = 0;
+    if (!firstPairOdd)
+        x = 2;
+
+    for (int j = 0 - howManyNotesBack; j < ((howManyPairs * 2) - howManyNotesBack); j++)
+    {
+        x++;
+        if (x % 2 == 0) //(for each pair of notes)
+        {
+            if ((x / 2) % 2 == 1) //(if the pair is an odd pair)
+            {
+                pekingPartTanggung[pekingCounter + j] = outNoteOdd;
+                pekingPartTanggung[pekingCounter + j + 1] = outNoteOdd;
+            }
+            else if ((x / 2) % 2 == 0) //(if the pair is an even pair)
+            {
+                pekingPartTanggung[pekingCounter + j] = outNoteEven;
+                pekingPartTanggung[pekingCounter + j + 1] = outNoteEven;
+            }
+        }
+    }
+}
 
 void ChangePekingNotesBasedOnDifference(int pekingCounter, char pekingNoteUp, char pekingNoteDown, int pekingNoteUpIndex, int pekingNoteDownIndex, int pekingNotePreviousIndex, int howManyNotesBack)
 {
@@ -1293,11 +1308,13 @@ void ChangePekingNotesBasedOnDifference(int pekingCounter, char pekingNoteUp, ch
 
     if (pekingNoteUpPreviousIndexDifference > pekingNoteDownPreviousIndexDifference)
     {
+        //ChangePekingNotes(pekingCounter, howManyNotesBack, 1, true, pekingNoteDown);
         pekingPartTanggung[pekingCounter - howManyNotesBack] = pekingNoteDown;
         pekingPartTanggung[pekingCounter - (howManyNotesBack - 1)] = pekingNoteDown;
     }
     if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference || pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
     {
+        //ChangePekingNotes(pekingCouter, howManyNotesBack, 1, true, pekingNoteUp);
         pekingPartTanggung[pekingCounter - howManyNotesBack] = pekingNoteUp;
         pekingPartTanggung[pekingCounter - (howManyNotesBack - 1)] = pekingNoteUp;
     }
