@@ -616,6 +616,45 @@ char[] kenongPartDados = new char[noteCounter * 2];
 char[] kempulPartDados = new char[noteCounter * 2];
 
 //DADOS GENERATION GOES HERE
+//BONANG - PRINT EACH FOUR/EIGHT NOTES TWICE
+//PANERUS
+
+//BARUNG
+for (int i = 0; i < (noteCounter * 4); i++)
+{
+    if (i < 2)
+        bonangBarungPartDados[i] = bonangBarungPartTanggung[i];
+    else if (i == 5)
+    {
+        bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1)/2) + 0];
+        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1)/2) + 1];
+        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1)/2) - 2];
+        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1)/2) - 1];
+    }
+    else if ((i - 1) % 8 == 4 && i > 5 && (i - 1) / 2 < (noteCounter * 2) - 2)
+    {
+        bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1)/2) - 4];
+        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1)/2) - 3];
+        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1)/2) - 2];
+        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1)/2) - 1];
+    }
+    else if ((i - 1) % 8 == 4 && (i - 1) / 2 >= (noteCounter * 2) - 2)
+    {
+        bonangBarungPartDados[i - 3] = bonangBarungPartDados[i - 7];
+        bonangBarungPartDados[i - 2] = bonangBarungPartDados[i - 6];
+        bonangBarungPartDados[i - 1] = bonangBarungPartDados[i - 5];
+        bonangBarungPartDados[i] = bonangBarungPartDados[i - 4];
+        bonangBarungPartDados[i + 1] = bonangBarungPartDados[i - 5];
+        bonangBarungPartDados[i + 2] = bonangBarungPartDados[1];
+    }
+    else if ((i - 1) % 8 == 0)
+    {
+        bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1)/2) - 2];
+        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1)/2) - 1];
+        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1)/2) + 0];
+        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1)/2) + 1];
+    }
+}
 //PEKING - PRINT EACH PAIR TWICE (repeat each four notes twice)
 for (int i = 0; i < (noteCounter * 4); i++)
 {
@@ -632,28 +671,6 @@ for (int i = 0; i < (noteCounter * 4); i++)
         pekingPartDados[i - 2] = pekingPartTanggung[((i + 1)/2) - 3];
         pekingPartDados[i - 1] = pekingPartTanggung[((i + 1)/2) - 2];
         pekingPartDados[i] = pekingPartTanggung[((i + 1)/2) - 1];
-    }
-}
-
-//BONANG - PRINT EACH FOUR/EIGHT NOTES TWICE
-//PANERUS
-
-//BARUNG
-for (int i = 0; i < (noteCounter * 4); i++)
-{
-    if ((i + 1) % 8 == 4 && i < 8)
-    {
-        bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i + 1)/2) - 2];
-        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i + 1)/2) - 1];
-        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i + 1)/2) + 0];
-        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i + 1)/2) + 1];
-    }
-    else if ((i + 1) % 8 == 0)
-    {
-        bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i + 1)/2) - 4];
-        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i + 1)/2) - 3];
-        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i + 1)/2) - 2];
-        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i + 1)/2) - 1];
     }
 }
 //SARON/SLENTHEM - ADD A SPACE BEFORE EACH NOTE
@@ -1059,6 +1076,16 @@ void ChangePekingNotesBasedOnDifference(int pekingNoteUpIndex, int pekingNoteDow
 
     if (pekingNoteUpPreviousIndexDifference < pekingNoteDownPreviousIndexDifference || pekingNoteUpPreviousIndexDifference == pekingNoteDownPreviousIndexDifference)
         ChangePekingNotes(pekingCounter, howManyNotesBack, howManyPairs, firstPairOdd, pekingNoteUp, outNoteEven);
+}
+
+void GenerateDadosNotes(char[] partTanggung, char[] partDados, int index, int incrementLowerBound, int incrementUpperBound)
+{
+    int counter = 0;
+    for (int j = incrementLowerBound; j <= incrementUpperBound; j++)
+    {
+        partDados[index + j] = partTanggung[index + counter];
+        counter++;
+    }
 }
 
 void DisplayPart(char[] part, int notesPerGatra)
