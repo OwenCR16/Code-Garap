@@ -287,29 +287,22 @@ if (userIrama == "tanggung")
         generateCounter++;
         if (generateCounter % 2 == 0)
         {
-            //if the first pitch is a 0 and the second pitch is not a 0
             if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] != '0'))
             {
                 bool foundNonZero = false;
-                //lets look backwards through the balungan
                 for (int i = (generateCounter - 2); i >= 0; i--)
                 {
-                    //once we find the most recent pitch that isn't 0
                     if (userInputArr[i] != '0')
                     {
                         GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[i], userInputArr[generateCounter - 1]);
                         foundNonZero = true;
-                    }
-
-                    if (foundNonZero == true)
                         break;
+                    }
                 }
-
-                if (foundNonZero == false)
+                if (!foundNonZero)
                     GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
             }
 
-            //if both pitches are 0
             else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
             {
                 bool foundNonZero = false;
@@ -320,17 +313,13 @@ if (userIrama == "tanggung")
                     {
                         GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[i], userInputArr[i]);
                         foundNonZero = true;
-                    }
-
-                    if (foundNonZero == true)
                         break;
+                    }
                 }
-
-                if (foundNonZero == false)
+                if (!foundNonZero)
                     GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
             }
 
-            //if the second pitch is a 0 and the first pitch is not a 0
             else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
                 GenerateBonangPanerusNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
 
@@ -339,7 +328,6 @@ if (userIrama == "tanggung")
         }
     }
 
-    //last 4 notes
     GenerateBonangPanerusNotes(generateCounter, 4, -4, -1, bonangPanerusPartTanggung[1], bonangPanerusPartTanggung[2], userInputArr[noteCounter - 1]);
 
     Console.WriteLine("\n\nBonang Panerus:");
@@ -357,29 +345,22 @@ if (userIrama == "tanggung")
         generateCounter++;
         if (generateCounter % 2 == 0)
         {
-            //if the first pitch is a 0 and the second pitch is not a 0
             if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] != '0'))
             {
                 bool foundNonZero = false;
-                //lets look backwards through the balungan
+
                 for (int i = (generateCounter - 2); i >= 0; i--)
                 {
-                    //once we find the most recent pitch that isn't 0
                     if (userInputArr[i] != '0')
                     {
                         GenerateBonangBarungNotesGroup(generateCounter, userInputArr[i], userInputArr[generateCounter - 1]);
                         foundNonZero = true;
-                    }
-                    //if we find one, we can stop iterating
-                    if (foundNonZero == true)
                         break;
+                    }
                 }
-                //if we can't find one before the start of the balungan we need to look at the final seleh
-                if (foundNonZero == false)
+                if (!foundNonZero)
                     GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[generateCounter - 1]);
             }
-
-            //if both pitches are 0
             else if ((userInputArr[generateCounter - 2] == '0') && (userInputArr[generateCounter - 1] == '0'))
             {
                 bool foundNonZero = false;
@@ -390,17 +371,12 @@ if (userIrama == "tanggung")
                     {
                         GenerateBonangBarungNotesGroup(generateCounter, userInputArr[i], userInputArr[i]);
                         foundNonZero = true;
-                    }
-
-                    if (foundNonZero == true)
                         break;
+                    }
                 }
-
-                if (foundNonZero == false)
+                if (!foundNonZero)
                     GenerateBonangBarungNotesGroup(generateCounter, userInputArr[noteCounter - 1], userInputArr[noteCounter - 1]);
             }
-
-            //if the second pitch is a 0 and the first pitch is not a 0
             else if ((userInputArr[generateCounter - 1] == '0') && (userInputArr[generateCounter - 2] != '0'))
                 GenerateBonangBarungNotesGroup(generateCounter, userInputArr[generateCounter - 2], userInputArr[generateCounter - 2]);
 
@@ -668,9 +644,8 @@ if (userIrama == "tanggung")
     DisplayPart(pekingPartTanggung, 8);
 
 
-    //SARON/SLENTHEM GENERATION
+    //SARON AND SLENTHEM GENERATION
     //Saron and slenthem play the balungan verbatim.
-
     saronSlenthemPartTanggung = userInputArr;
     Console.WriteLine("\n\nSaron and Slenthem:");
     Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
@@ -679,7 +654,6 @@ if (userIrama == "tanggung")
 
     //KENONG GENERATION
     //Kenong plays on the even seleh in tanggung - if the place of the note in sequence is divisible by 8, write it verbatim in the part. Otherwise, write rests (0).
-
     generateCounter = 0;
     foreach (char note in userInputArr)
     {
@@ -761,80 +735,7 @@ if (userIrama == "tanggung")
 else if (userIrama == "dados")
 {
     Console.WriteLine("(The parts displayed for irama dados are written in the same time-frame as tanggung to illustrate the difference between the two.)\n");
-
-
-
-    Console.WriteLine("\nPeking:");
-    displayCounter = 0;
-    foreach (char notePeking in pekingPartDados)
-    {
-        Console.Write(notePeking);
-        displayCounter++;
-        if ((displayCounter) % 8 == 0)
-        {
-            Console.Write(" ");
-        }
-    }
-
-    Console.WriteLine("\nBonang Panerus:");
-    displayCounter = 0;
-    foreach (char noteBonangPanerus in bonangPanerusPartDados)
-    {
-        Console.Write(noteBonangPanerus);
-        displayCounter++;
-        if ((displayCounter) % 16 == 0)
-        {
-            Console.Write(" ");
-        }
-    }
-
-    Console.WriteLine("\nBonang Barung:");
-    displayCounter = 0;
-    foreach (char noteBonangBarung in bonangBarungPartDados)
-    {
-        Console.Write(noteBonangBarung);
-        displayCounter++;
-        if ((displayCounter) % 8 == 0)
-        {
-            Console.Write(" ");
-        }
-    }
-
-    Console.WriteLine("\nSaron and Slenthem:");
-    displayCounter = 0;
-    foreach (char noteSaronSlenthem in saronSlenthemPartDados)
-    {
-        Console.Write(noteSaronSlenthem);
-        displayCounter++;
-        if ((displayCounter) % 4 == 0)
-        {
-            Console.Write(" ");
-        }
-    }
-
-    Console.WriteLine("\nKenong:");
-    displayCounter = 0;
-    foreach (char noteKenong in kenongPartDados)
-    {
-        Console.Write(noteKenong);
-        displayCounter++;
-        if ((displayCounter) % 4 == 0)
-        {
-            Console.Write(" ");
-        }
-    }
-
-    Console.WriteLine("\nKempul:");
-    displayCounter = 0;
-    foreach (char noteKempul in kempulPartDados)
-    {
-        Console.Write(noteKempul);
-        displayCounter++;
-        if ((displayCounter) % 4 == 0)
-        {
-            Console.Write(" ");
-        }
-    }
+    Console.WriteLine("Dados is under construction. Please only use irama tanggung for now.\n");
 }
 
 Console.WriteLine("\n\nSome considerations: Peking ...(different styles of playing, note above/below rule on double notes/rests)");
@@ -1098,6 +999,9 @@ void TransposeBalungan(char[] balungan)
 }
 
 //NOTE THAT FOR NOW THESE METHODS AND THEIR NAMES ONLY APPLY TO IRAMA TANGGUNG
+
+//NEW METHOD FOR FINDING NON-ZERO: RETURNS A BOOL, IN CODE PUT AS THE CONDITION IN AN IF STATEMENT
+//PARAMETERS: WHICH ARRAY/ETC
 
 void GenerateBonangPanerusNotesGroup(int generateCounter, char outNotes2and4, char outNote3, char outNote1 = '0')
 {
