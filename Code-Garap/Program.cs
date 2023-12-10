@@ -616,6 +616,39 @@ char[] kenongPartDados = new char[noteCounter * 2];
 char[] kempulPartDados = new char[noteCounter * 2];
 
 //DADOS GENERATION GOES HERE
+//PEKING - PRINT EACH PAIR TWICE (repeat each four notes twice)
+for (int i = 0; i < (noteCounter * 4); i++)
+{
+    if ((i + 1) % 8 == 4)
+    {
+        pekingPartDados[i - 3] = pekingPartTanggung[];
+        pekingPartDados[i - 2] = pekingPartTanggung[];
+        pekingPartDados[i - 1] = pekingPartTanggung[];
+        pekingPartDados[i] = pekingPartTanggung[];
+    }
+    else if ((i + 1) % 8 == 0)
+    {
+        pekingPartDados[i - 3] = pekingPartTanggung[];
+        pekingPartDados[i - 2] = pekingPartTanggung[];
+        pekingPartDados[i - 1] = pekingPartTanggung[];
+        pekingPartDados[i] = pekingPartTanggung[];
+    }
+}
+
+//33223311
+//01234567
+
+//3322332233 1  1  3  3  1  1 
+//0123456789 10 11 12 13 14 15
+
+
+//BONANG - PRINT EACH FOUR/EIGHT NOTES TWICE
+
+//SARON/SLENTHEM - ADD A SPACE BEFORE EACH NOTE
+
+//KENONG SAME BUT WITH MORE SPACE
+
+//KEMPUL SAME BUT WITH MORE SPACE
 
 
 if (userIrama == "tanggung")
