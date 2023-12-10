@@ -626,22 +626,11 @@ for (int i = 0; i < (noteCounter * 4); i++)
         bonangBarungPartDados[i] = bonangBarungPartTanggung[i];
     else if (i == 5)
     {
-        /*bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1) / 2) + 0];
-        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1) / 2) + 1];*/
         GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, -2, -1, 0.5F, 0);
-        /*bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1) / 2) - 2];
-        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1) / 2) - 1];*/
         GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -1, 0, -1, 0.5F, -2);
-        
     }
     else if ((i - 1) % 8 == 4 && i > 5 && (i - 1) / 2 < (noteCounter * 2) - 2)
-    {
-        /*bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1) / 2) - 4];
-        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1) / 2) - 3];
-        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1) / 2) - 2];
-        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1) / 2) - 1];*/
         GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, 0, -1, 0.5F, -4);
-    }
     else if ((i - 1) % 8 == 4 && (i - 1) / 2 >= (noteCounter * 2) - 2)
     {
         GenerateDadosNotes(bonangBarungPartDados, bonangBarungPartDados, i, -3, 0, 0, 1, -7);
@@ -649,13 +638,7 @@ for (int i = 0; i < (noteCounter * 4); i++)
         bonangBarungPartDados[i + 2] = bonangBarungPartDados[1];
     }
     else if ((i - 1) % 8 == 0)
-    {
-        /*bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[((i - 1) / 2) - 2];
-        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[((i - 1) / 2) - 1];
-        bonangBarungPartDados[i - 1] = bonangBarungPartTanggung[((i - 1) / 2) + 0];
-        bonangBarungPartDados[i] = bonangBarungPartTanggung[((i - 1) / 2) + 1];*/
         GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, 0, -1, 0.5F, -2);
-    }
 }
 //PEKING - PRINT EACH PAIR TWICE (repeat each four notes twice)
 for (int i = 0; i < (noteCounter * 4); i++)
