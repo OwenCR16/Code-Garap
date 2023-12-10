@@ -602,36 +602,6 @@ foreach (char note in userInputArr)
         kempulPartTanggung[generateCounter - 1] = '0';
 }
 
-Console.WriteLine("\n\nBonang Panerus:");
-Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartTanggung[1]}{bonangPanerusPartTanggung[2]}{bonangPanerusPartTanggung[1]})");
-Console.Write("\t");
-DisplayPart(bonangPanerusPartTanggung, 16);
-
-Console.WriteLine("\n\nBonang Barung:");
-if (userInputArr[0] != '0')
-    Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[0]})");
-else if (userInputArr[0] == '0')
-    Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]})");
-Console.Write("\t");
-DisplayPart(bonangBarungPartTanggung, 8);
-
-Console.WriteLine("\n\nPeking:");
-Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]}) ");
-DisplayPart(pekingPartTanggung, 8);
-
-Console.WriteLine("\n\nSaron and Slenthem:");
-Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
-DisplayPart(saronSlenthemPartTanggung, 4);
-
-Console.WriteLine("\n\nKenong:");
-Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
-DisplayPart(kenongPartTanggung, 4);
-
-Console.WriteLine("\n\nKempul:");
-Console.Write($" (gong) ");
-DisplayPart(kempulPartTanggung, 4);
-
-
 //IMPORTANT: PEKINGAN IN DADOS REPEATS EACH PAIR TWICE - ARE THERE EXCEPTIONS?
 //SARON/KENONG/KEMPUL ARE EASY (add a space before each note)
 //BONANG AND PEKING ARE ALSO FAIRLY EASY (double each pattern/pair)
@@ -645,6 +615,42 @@ char[] saronSlenthemPartDados = new char[noteCounter * 2];
 char[] kenongPartDados = new char[noteCounter * 2];
 char[] kempulPartDados = new char[noteCounter * 2];
 
+//DADOS GENERATION GOES HERE
+
+
+if (userIrama == "tanggung")
+{
+    Console.WriteLine("\n\nBonang Panerus:");
+    Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartTanggung[1]}{bonangPanerusPartTanggung[2]}{bonangPanerusPartTanggung[1]})");
+    Console.Write("\t");
+    DisplayPart(bonangPanerusPartTanggung, 16);
+
+    Console.WriteLine("\n\nBonang Barung:");
+    if (userInputArr[0] != '0')
+        Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[0]})");
+    else if (userInputArr[0] == '0')
+        Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]})");
+    Console.Write("\t");
+    DisplayPart(bonangBarungPartTanggung, 8);
+
+    Console.WriteLine("\n\nPeking:");
+    Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]}) ");
+    DisplayPart(pekingPartTanggung, 8);
+
+    Console.WriteLine("\n\nSaron and Slenthem:");
+    Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
+    DisplayPart(saronSlenthemPartTanggung, 4);
+
+    Console.WriteLine("\n\nKenong:");
+    Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
+    DisplayPart(kenongPartTanggung, 4);
+
+    Console.WriteLine("\n\nKempul:");
+    Console.Write($" (gong) ");
+    DisplayPart(kempulPartTanggung, 4);
+}
+
+//DADOS DISPLAY GOES HERE
 if (userIrama == "dados")
 {
     Console.WriteLine("(The parts displayed for irama dados are written in the same time-frame as tanggung to illustrate the difference between the two.)\n");
