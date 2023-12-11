@@ -626,42 +626,38 @@ for (int i = 0; i < (noteCounter * 4); i++)
         bonangBarungPartDados[i] = bonangBarungPartTanggung[i];
     else if (i == 5)
     {
-        GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, -2, -1, 0.5F, 0);
-        GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -1, 0, -1, 0.5F, -2);
+        GenerateDadosNotesHighInst(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, -2, -1, 0.5F, 0);
+        GenerateDadosNotesHighInst(bonangBarungPartTanggung, bonangBarungPartDados, i, -1, 0, -1, 0.5F, -2);
     }
     else if ((i - 1) % 8 == 4 && i > 5 && (i - 1) / 2 < (noteCounter * 2) - 2)
-        GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, 0, -1, 0.5F, -4);
+        GenerateDadosNotesHighInst(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, 0, -1, 0.5F, -4);
     else if ((i - 1) % 8 == 4 && (i - 1) / 2 >= (noteCounter * 2) - 2)
     {
-        GenerateDadosNotes(bonangBarungPartDados, bonangBarungPartDados, i, -3, 0, 0, 1, -7);
+        GenerateDadosNotesHighInst(bonangBarungPartDados, bonangBarungPartDados, i, -3, 0, 0, 1, -7);
         bonangBarungPartDados[i + 1] = bonangBarungPartDados[i - 5];
         bonangBarungPartDados[i + 2] = bonangBarungPartDados[1];
     }
     else if ((i - 1) % 8 == 0)
-        GenerateDadosNotes(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, 0, -1, 0.5F, -2);
+        GenerateDadosNotesHighInst(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, 0, -1, 0.5F, -2);
 }
 //PEKING - PRINT EACH PAIR TWICE (repeat each four notes twice)
 for (int i = 0; i < (noteCounter * 4); i++)
 {
     if ((i + 1) % 8 == 4)
-        GenerateDadosNotes(pekingPartTanggung, pekingPartDados, i, -3, 0, 1, 0.5F, -2);
-    
+        GenerateDadosNotesHighInst(pekingPartTanggung, pekingPartDados, i, -3, 0, 1, 0.5F, -2);
+
     else if ((i + 1) % 8 == 0)
-        GenerateDadosNotes(pekingPartTanggung, pekingPartDados, i, -3, 0, 1, 0.5F, -4);
-    
+        GenerateDadosNotesHighInst(pekingPartTanggung, pekingPartDados, i, -3, 0, 1, 0.5F, -4);
 }
-//SARON/SLENTHEM - ADD A SPACE BEFORE EACH NOTE
+//SARON/SLENTHEM, KENONG, KEMPUL - ADD A SPACE BEFORE EACH NOTE
 for (int i = 0; i < (noteCounter * 2); i++)
 {
-    if ((i + 1) % 2 == 1)
-        saronSlenthemPartDados[i] = '0';
-    else if ((i + 1) % 2 == 0)
-        saronSlenthemPartDados[i] = saronSlenthemPartTanggung[((i + 1) / 2) - 1];
+    GenerateDadosNotesLowInst(saronSlenthemPartTanggung, saronSlenthemPartDados, i);
+
+    GenerateDadosNotesLowInst(kenongPartTanggung, kenongPartDados, i);
+
+    GenerateDadosNotesLowInst(kempulPartTanggung, kempulPartDados, i);
 }
-
-//KENONG SAME BUT WITH MORE SPACE
-
-//KEMPUL SAME BUT WITH MORE SPACE
 
 //NEW: HAVE A MESSAGE HERE THAT SAYS: YOUR PARTS WERE GENERATED - SELECT WHICH PARTS YOU WANT TO SEE
 
@@ -1055,7 +1051,7 @@ void ChangePekingNotesBasedOnDifference(int pekingNoteUpIndex, int pekingNoteDow
         ChangePekingNotes(pekingCounter, howManyNotesBack, howManyPairs, firstPairOdd, pekingNoteUp, outNoteEven);
 }
 
-void GenerateDadosNotes(char[] partTanggung, char[] partDados, int index, int dadosIncrementLowerBound, int dadosIncrementUpperBound, int tanggungIndexModifier, float tanggungIndexMultiplier, int tanggungInitialModifier)
+void GenerateDadosNotesHighInst(char[] partTanggung, char[] partDados, int index, int dadosIncrementLowerBound, int dadosIncrementUpperBound, int tanggungIndexModifier, float tanggungIndexMultiplier, int tanggungInitialModifier)
 {
     int counter = 0;
     for (int j = dadosIncrementLowerBound; j <= dadosIncrementUpperBound; j++)
@@ -1063,6 +1059,14 @@ void GenerateDadosNotes(char[] partTanggung, char[] partDados, int index, int da
         partDados[index + j] = partTanggung[(int)((index + tanggungIndexModifier) * tanggungIndexMultiplier) + tanggungInitialModifier + counter];
         counter++;
     }
+}
+
+void GenerateDadosNotesLowInst(char[] partTanggung, char[] partDados, int index)
+{
+    if ((index + 1) % 2 == 1)
+        partDados[index] = '0';
+    else if ((index + 1) % 2 == 0)
+        partDados[index] = partTanggung[((index + 1) / 2) - 1];
 }
 
 void DisplayPart(char[] part, int notesPerGatra)
