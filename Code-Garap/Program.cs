@@ -209,41 +209,6 @@ if (menuActive)
     } while (!userExit);
 }
 
-
-string userIrama = "tanggung";
-bool userIramaValid = false;
-
-Console.WriteLine("\nNow, please choose the irama you would like the application to generate the parts in: enter \"1\" for irama tanggung or \"2\" for irama dados.\n");
-
-do
-{
-    string? iramaInput = Console.ReadLine();
-    if (iramaInput != null)
-    {
-        iramaInput = iramaInput.Trim();
-        try
-        {
-            userIrama = GetUserIrama(iramaInput);
-            userIramaValid = true;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-    }
-    else
-    {
-        Console.WriteLine("\nPlease choose the irama you would like the application to generate the parts in: enter \"1\" for irama tanggung or \"2\" for irama dados.\n");
-    }
-} while (userIramaValid == false);
-Console.WriteLine($"You have chosen irama {userIrama}.\n");
-
-Console.WriteLine($"The output below contains generated representative parts for your balungan in laras {userLaras} pathet {userPathet}, and in irama {userIrama}:\n");
-DisplayBalungan(userInputArr);
-
-Console.WriteLine($"\n\nNote - the instruments interpret the balungan as a ladrang, regardless of the length.\n");
-
-
 char[] pekingPartTanggung = new char[noteCounter * 2];
 char[] bonangPanerusPartTanggung = new char[noteCounter * 4];
 char[] bonangBarungPartTanggung = new char[noteCounter * 2];
@@ -664,10 +629,47 @@ for (int i = 0; i < (noteCounter * 2); i++)
     GenerateDadosNotesLowInst(kempulPartTanggung, kempulPartDados, i);
 }
 
+string userIrama = "tanggung";
+bool userIramaValid = false;
+
+Console.WriteLine("\nYour parts have been generated! Please choose the irama of the parts you would like to display: enter \"1\" for irama tanggung, \"2\" for irama dados, or \"3\" to display both.\n");
+
+do
+{
+    string? iramaInput = Console.ReadLine();
+    if (iramaInput != null)
+    {
+        iramaInput = iramaInput.Trim();
+        try
+        {
+            userIrama = GetUserIrama(iramaInput);
+            userIramaValid = true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+    else
+    {
+        Console.WriteLine("\nPlease choose the irama you would like the application to generate the parts in: enter \"1\" for irama tanggung or \"2\" for irama dados.\n");
+    }
+} while (userIramaValid == false);
+if (userIrama == "both")
+    Console.WriteLine($"You have chosen to display both irama tanggung and irama dados.");
+else
+    Console.WriteLine($"You have chosen to display irama {userIrama}.\n");
+
+Console.WriteLine($"The output below contains generated representative parts for your balungan in laras {userLaras} pathet {userPathet}:\n");
+DisplayBalungan(userInputArr);
+
+Console.WriteLine($"\n\nNote - the instruments interpret the balungan as a ladrang, regardless of the length.\n");
+
 //NEW: HAVE A MESSAGE HERE THAT SAYS: YOUR PARTS HAVE BEEN GENERATED - SELECT WHICH PARTS YOU WOULD LIKE TO SEE (1=tng 2=dds 3="both")
 
 if (userIrama == "tanggung" || userIrama == "both")
 {
+    Console.WriteLine("Displaying parts in irama tanggung:\n");
     Console.WriteLine("\n\nBonang Panerus:");
     Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartTanggung[1]}{bonangPanerusPartTanggung[2]}{bonangPanerusPartTanggung[1]})");
     Console.Write("\t");
@@ -701,6 +703,10 @@ if (userIrama == "tanggung" || userIrama == "both")
 //DADOS DISPLAY GOES HERE
 if (userIrama == "dados" || userIrama == "both")
 {
+    Console.WriteLine("Displaying parts in irama dados:\n");
+
+    //DISPLAY PARTS
+
     Console.WriteLine("The parts displayed below in irama dados are written in the same time-frame as tanggung to illustrate the difference between the two - each four-note gatra takes up eight notes of space (two gatras).\n");
 }
 
@@ -916,6 +922,8 @@ string GetUserIrama(string input)
             return "tanggung";
         case "2":
             return "dados";
+        case "3":
+            return "both";
         default:
             throw new ArgumentException($"Sorry but \"{input}\" is not a valid option. Please choose a valid irama: enter \"1\" for irama tanggung or \"2\" for irama dados.\n");
     }
