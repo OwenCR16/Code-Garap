@@ -697,7 +697,7 @@ if (userIrama == "tanggung" || userIrama == "both")
     DisplayPart(kenongPartTanggung, 4);
 
     Console.WriteLine("\n\nKempul:");
-    Console.Write($" (gong) ");
+    Console.Write($" (Gong) ");
     DisplayPart(kempulPartTanggung, 4);
 }
 
@@ -731,7 +731,7 @@ if (userIrama == "dados" || userIrama == "both")
     DisplayPart(kenongPartDados, 4);
 
     Console.WriteLine("\n\nKempul:");
-    Console.Write($" (gong) ");
+    Console.Write($" (Gong) ");
     DisplayPart(kempulPartDados, 4);
 
     Console.WriteLine("\n\nParts displayed in irama dados are written in the same time-frame as tanggung to illustrate the difference between the two - each four-note gatra takes up eight notes of space (two gatras).\n");
