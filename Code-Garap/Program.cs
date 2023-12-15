@@ -5,6 +5,7 @@
 // GAMBIR SAWIT - SLENDRO SANGA - 0352 0356 2200 2321 0032 0126 2200 2321 0032 0165 0056 1653 0023 5321 6532 0165
 
 //TODO
+//CHALLENGE - ADD OPTION FOR OCCAISIONAL SELEH NOTES PLAYED BY BONANG
 //OCTAVES CAN BE CUSTOMISED BY THE USER WHEN THEY WANT SOMETHING PLAYED BACK/PARTS PRINTED
 //CHAllENGE - FIND OUT HOW NOTE 4 WORKS IN PELOG PROPERLY AND ADD EXTRA RULES
 //EXCEPTION HANDLING CAN BE OPTIMISED IN FUTURE - TO SHOW ALL EXCEPTIONS INSTEAD OF JUST THE FIRST, TRY EACH SMALLER METHOD SEPARATELY
@@ -250,7 +251,7 @@ char[] saronSlenthemPartTanggung = new char[noteCounter];
 char[] kenongPartTanggung = new char[noteCounter];
 char[] kempulPartTanggung = new char[noteCounter];
 
-//GENERATING AND DISPLAYING EACH PART IN TANGGUNG
+//GENERATING EACH PART IN IRAMA TANGGUNG
 
 //BONANG PANERUS GENERATION
 //Bonang panerus plays at a speed of 4 notes per beat, with a doubled-up 0aba pattern once per beat e.g. 0aba0aba0cdc0cdc for gatra abcd.
@@ -346,7 +347,6 @@ foreach (char note in userInputArr)
             pekingPartTanggung[(generateCounter * 2) - 1] = pekingPartTanggung[(generateCounter * 2) - 3];
         }
     }
-
     else
     {
         generateCounter++;
@@ -580,8 +580,8 @@ foreach (char note in userInputArr)
 }
 
 //KEMPUL GENERATION
-//the kempul plays on the odd seleh in tangung (but not the first!) - THIS IS ASSUMING THAT THE GAMELAN HAS A KEMPUL OF EVERY PITCH - WHICH IS BASICALLY NEVER TRUE.
-//!!!NEW RULE!!! THE KEMPUL CANNOT PLAY ON SELEH 4
+//The kempul plays on the odd seleh in tangung (but not the first!) - THIS IS ASSUMING THAT THE GAMELAN HAS A KEMPUL OF EVERY PITCH - WHICH IS BASICALLY NEVER TRUE.
+//!!!NEW RULE YET TO BE IMPLEMENTED!!! THE KEMPUL CANNOT PLAY ON SELEH 4
 generateCounter = 0;
 foreach (char note in userInputArr)
 {
@@ -602,12 +602,6 @@ foreach (char note in userInputArr)
         kempulPartTanggung[generateCounter - 1] = '0';
 }
 
-//IMPORTANT: PEKINGAN IN DADOS REPEATS EACH PAIR TWICE - ARE THERE EXCEPTIONS?
-//SARON/KENONG/KEMPUL ARE EASY (add a space before each note)
-//BONANG AND PEKING ARE ALSO FAIRLY EASY (double each pattern/pair)
-//TO GENERATE, USE THE TANGGUNG PARTS
-//GENERATING AND DISPLAYING EACH PART IN DADOS - UNDER CONSTRUCTION!!!
-
 char[] pekingPartDados = new char[noteCounter * 4];
 char[] bonangPanerusPartDados = new char[noteCounter * 8];
 char[] bonangBarungPartDados = new char[noteCounter * 4];
@@ -615,13 +609,28 @@ char[] saronSlenthemPartDados = new char[noteCounter * 2];
 char[] kenongPartDados = new char[noteCounter * 2];
 char[] kempulPartDados = new char[noteCounter * 2];
 
-//DADOS GENERATION GOES HERE
-//BONANG - PRINT EACH FOUR/EIGHT NOTES TWICE
-//PANERUS
+//GENERATING EACH PART IN IRAMA DADOS
+//BONANG PANERUS - Each eight note pattern occurs twice
+for (int i = 0; i < (noteCounter * 8); i++)
+{
+    if (i < 4)
+        bonangPanerusPartDados[i] = bonangPanerusPartTanggung[i];
+    else if (i == 11)
+    {
+        GenerateDadosNotesHighInst(bonangPanerusPartTanggung, bonangPanerusPartDados, i, -7, -4, -3, 0.5F, -4);
+        GenerateDadosNotesHighInst(bonangPanerusPartTanggung, bonangPanerusPartDados, i, -3, 0, -3, 0.5F, -4);
+    }
+    else if ((i - 3) % 16 == 0 && (i + 1) / 2 < (noteCounter * 4))
+        GenerateDadosNotesHighInst(bonangPanerusPartTanggung, bonangPanerusPartDados, i, -7, 0, -3, 0.5F, -4);
+    else if ((i + 1) % 16 == 0 && (i + 1) / 2 >= (noteCounter * 4))
+        GenerateDadosNotesHighInst(bonangPanerusPartTanggung, bonangPanerusPartDados, i, -3, 0, 1, 0.5F, -4);
+    else if ((i - 3) % 16 == 8)
+        GenerateDadosNotesHighInst(bonangPanerusPartTanggung, bonangPanerusPartDados, i, -7, 0, -3, 0.5F, -8);
+}
 
-//BARUNG
 for (int i = 0; i < (noteCounter * 4); i++)
 {
+    //BONANG BARUNG - Each four note pattern occurs twice
     if (i < 2)
         bonangBarungPartDados[i] = bonangBarungPartTanggung[i];
     else if (i == 5)
@@ -639,29 +648,25 @@ for (int i = 0; i < (noteCounter * 4); i++)
     }
     else if ((i - 1) % 8 == 0)
         GenerateDadosNotesHighInst(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, 0, -1, 0.5F, -2);
-}
-//PEKING - PRINT EACH PAIR TWICE (repeat each four notes twice)
-for (int i = 0; i < (noteCounter * 4); i++)
-{
+
+    //PEKING - Each pair of note pairs (each four notes) occurs twice
     if ((i + 1) % 8 == 4)
         GenerateDadosNotesHighInst(pekingPartTanggung, pekingPartDados, i, -3, 0, 1, 0.5F, -2);
-
     else if ((i + 1) % 8 == 0)
         GenerateDadosNotesHighInst(pekingPartTanggung, pekingPartDados, i, -3, 0, 1, 0.5F, -4);
 }
-//SARON/SLENTHEM, KENONG, KEMPUL - ADD A SPACE BEFORE EACH NOTE
+
+//SARON/SLENTHEM, KENONG, AND KEMPUL - Add a space before each note
 for (int i = 0; i < (noteCounter * 2); i++)
 {
     GenerateDadosNotesLowInst(saronSlenthemPartTanggung, saronSlenthemPartDados, i);
-
     GenerateDadosNotesLowInst(kenongPartTanggung, kenongPartDados, i);
-
     GenerateDadosNotesLowInst(kempulPartTanggung, kempulPartDados, i);
 }
 
-//NEW: HAVE A MESSAGE HERE THAT SAYS: YOUR PARTS WERE GENERATED - SELECT WHICH PARTS YOU WANT TO SEE
+//NEW: HAVE A MESSAGE HERE THAT SAYS: YOUR PARTS HAVE BEEN GENERATED - SELECT WHICH PARTS YOU WOULD LIKE TO SEE (1=tng 2=dds 3="both")
 
-if (userIrama == "tanggung")
+if (userIrama == "tanggung" || userIrama == "both")
 {
     Console.WriteLine("\n\nBonang Panerus:");
     Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartTanggung[1]}{bonangPanerusPartTanggung[2]}{bonangPanerusPartTanggung[1]})");
@@ -694,10 +699,9 @@ if (userIrama == "tanggung")
 }
 
 //DADOS DISPLAY GOES HERE
-if (userIrama == "dados")
+if (userIrama == "dados" || userIrama == "both")
 {
-    Console.WriteLine("(The parts displayed for irama dados are written in the same time-frame as tanggung to illustrate the difference between the two.)\n");
-    Console.WriteLine("Dados is under construction. Please only use irama tanggung for now.\n");
+    Console.WriteLine("The parts displayed below in irama dados are written in the same time-frame as tanggung to illustrate the difference between the two - each four-note gatra takes up eight notes of space (two gatras).\n");
 }
 
 Console.WriteLine("\n\nSome considerations: Peking ...(different styles of playing, note above/below rule on double notes/rests)");
