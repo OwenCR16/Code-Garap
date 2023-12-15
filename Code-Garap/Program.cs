@@ -758,7 +758,6 @@ string GetUserLaras(string input)
     }
     else
         throw new ArgumentException($"Sorry but \"{input}\" is not a valid option. Please choose the laras of your balungan: enter \"1\" for slendro or \"2\" for pelog.\n");
-
 }
 
 void DisplayPathetOptions(string laras)
@@ -768,7 +767,6 @@ void DisplayPathetOptions(string laras)
 
     else if (laras == "pelog")
         Console.WriteLine("(Pelog: enter \"1\" for barang, \"2\" for nem, or \"3\" for lima)\n");
-
 }
 
 string GetUserPathet(string input)
