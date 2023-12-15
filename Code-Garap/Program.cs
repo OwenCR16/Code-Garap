@@ -667,8 +667,6 @@ DisplayBalungan(userInputArr);
 
 Console.WriteLine($"\n\nNote - the instruments interpret the balungan as a ladrang, regardless of the length. (MOVE THIS NOTE WHERE?)\n");
 
-//NEW: HAVE A MESSAGE HERE THAT SAYS: YOUR PARTS HAVE BEEN GENERATED - SELECT WHICH PARTS YOU WOULD LIKE TO SEE (1=tng 2=dds 3="both")
-
 if (userIrama == "tanggung" || userIrama == "both")
 {
     Console.WriteLine("\nDisplaying parts in irama tanggung\n");
@@ -703,7 +701,6 @@ if (userIrama == "tanggung" || userIrama == "both")
     DisplayPart(kempulPartTanggung, 4);
 }
 
-//DADOS DISPLAY GOES HERE
 if (userIrama == "dados" || userIrama == "both")
 {
     Console.WriteLine("\n\n\nDisplaying parts in irama dados\n");
@@ -724,7 +721,7 @@ if (userIrama == "dados" || userIrama == "both")
     Console.WriteLine("\n\nPeking:");
     Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]}) ");
     DisplayPart(pekingPartDados, 8);
-    
+
     Console.WriteLine("\n\nSaron and Slenthem:");
     Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
     DisplayPart(saronSlenthemPartDados, 4);
