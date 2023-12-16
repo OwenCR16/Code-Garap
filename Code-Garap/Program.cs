@@ -5,6 +5,7 @@
 // GAMBIR SAWIT - SLENDRO SANGA - 0352 0356 2200 2321 0032 0126 2200 2321 0032 0165 0056 1653 0023 5321 6532 0165
 
 //TODO
+//ADD OPTION TO REMOVE CHECKSELEH
 //CHALLENGE - ADD OPTION FOR OCCAISIONAL SELEH NOTES PLAYED BY BONANG
 //OCTAVES CAN BE CUSTOMISED BY THE USER WHEN THEY WANT SOMETHING PLAYED BACK/PARTS PRINTED
 //CHAllENGE - FIND OUT HOW NOTE 4 WORKS IN PELOG PROPERLY AND ADD EXTRA RULES
@@ -26,12 +27,48 @@ char[] pathetPelogNem = { '1', '2', '3', '4', '5', '6' };
 char[] pathetPelogLima = { '5', '6', '1', '2', '3', '4' };
 char[] chosenPathet = new char[6];
 
+Console.WriteLine("\nHello! This program generates a basic literal representation of some of the Javanese Gamelan parts for a balungan entered by the user.\n(Disclaimer - do not use these parts as a substitute for garap - this is only a demonstration, and definitely not a replacement!)\n\n");
+
+//OPTIONS MENU HERE
+bool checkSelehTrue = false;
+bool cont = false;
+Console.WriteLine("\nMenu: enter \"1\" to begin the application, enter \"2\" to change options, or enter \"3\" to exit.");
+do
+{
+    string? firstInput = Console.ReadLine();
+    if (firstInput != null)
+    {
+        firstInput = firstInput.Trim();
+
+        switch (firstInput)
+        {
+            case "1":
+                cont = true;
+                break;
+            case "2":
+                //Options(); 
+                //CHECKSELEHTRUE IS OFF BY DEFAULT, OPTION TO TURN IT ON
+                //OPTION TO TURN ON LIMITED KEMPUL PITCHES
+                //OPTION TO TURN ON ALTERNATIVE BONANG PATTERNS
+                Console.WriteLine("Under construction.");
+                cont = true; //DELETE THIS AFTERWARDS
+                break;
+            case "3":
+                Console.WriteLine("Under construction/not necessary?");
+                cont = true;
+                break;
+            default:
+                Console.WriteLine("Invalid entry. Please enter \"1\" to begin the application, enter \"2\" to change options, or enter \"3\" to exit.");
+                break;
+        }   
+    }
+    else
+        Console.WriteLine("\nMenu: enter \"1\" to begin the application, enter \"2\" to change options, or enter \"3\" to exit.");
+} while (!cont);
+
+Console.WriteLine("Firstly, please choose the laras of your balungan: enter \"1\" for slendro or \"2\" for pelog.\n");
 string userLaras = "initialise";
 bool userLarasValid = false;
-
-Console.WriteLine("\nHello! This program generates a basic literal representation of some of the Javanese Gamelan parts for a balungan entered by the user.\n(Disclaimer - do not use these parts as a substitute for garap - this is only a demonstration, and definitely not a replacement!)\n\n");
-Console.WriteLine("Firstly, please choose the laras of your balungan: enter \"1\" for slendro or \"2\" for pelog.\n");
-
 do
 {
     string? larasInput = Console.ReadLine();
@@ -54,7 +91,6 @@ do
         Console.WriteLine("Please choose the laras of your balungan: enter \"1\" for slendro or \"2\" for pelog.\n");
         userLarasValid = false;
     }
-
 } while (userLarasValid == false);
 Console.WriteLine($"You have chosen laras {userLaras}.\n");
 
@@ -98,8 +134,10 @@ bool userInputValid = false;
 
 do
 {
-    Console.WriteLine($"Please enter a 4, 8, or 16 gatra balungan in {userLaras} {userPathet}.\nYou may use spaces between gatra or anywhere you like. Please use \"-\" or \"0\" to depict a rest.");
-    Console.WriteLine($"Tip: For {userLaras} {userPathet}, the \"strong note\" (which should be the final seleh) is {chosenPathet[0]}.\n");
+    Console.WriteLine($"Please enter a 4, 8, or 16 gatra balungan in {userLaras} {userPathet}.\nYou may use spaces between gatra or anywhere you like. Please use \"-\" or \"0\" to depict a rest.\n");
+    
+    if (checkSelehTrue)
+        Console.WriteLine($"Tip: For {userLaras} {userPathet}, the \"strong note\" (which should be the final seleh) is {chosenPathet[0]}.\n");
 
     Array.Clear(userInputArr);
     userInput = Console.ReadLine();
@@ -137,7 +175,7 @@ do
             userTotalGatras = noteCounter / 4;
             try
             {
-                userInputValid = CheckLengthAndSeleh(userInputArr, chosenPathet, noteCounter);
+                userInputValid = CheckLengthAndSeleh(userInputArr, chosenPathet, noteCounter, checkSelehTrue);
                 Console.WriteLine($"You have entered a valid balungan of {userTotalGatras} gatras.");
             }
             catch (Exception ex)
@@ -880,7 +918,7 @@ void CheckPathetValid(char[] balungan, char[] pathet)
     return;
 }
 
-bool CheckLengthAndSeleh(char[] balungan, char[] pathet, int noteAmount)
+bool CheckLengthAndSeleh(char[] balungan, char[] pathet, int noteAmount, bool checkSelehTrue = false)
 {
     try
     {
@@ -891,13 +929,16 @@ bool CheckLengthAndSeleh(char[] balungan, char[] pathet, int noteAmount)
         throw;
     }
 
-    try
+    if (checkSelehTrue)
     {
-        CheckSeleh(balungan, pathet, noteAmount);
-    }
-    catch (Exception)
-    {
-        throw;
+        try
+        {
+            CheckSeleh(balungan, pathet, noteAmount);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
     return true;
 }
