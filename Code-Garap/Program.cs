@@ -50,7 +50,7 @@ do
                 //CHECKSELEHTRUE IS OFF BY DEFAULT, OPTION TO TURN IT ON
                 //OPTION TO DEFINE LIMITED KEMPUL PITCHES IN AN ARRAY:
                 //USE ARRAYS AVAILABLE KEMPUL NOTES LIKE THE LARAS ARRAYS (ONE FOR SLENDRO AND ONE FOR PELOG) AND ASK THE USER TO LIST ALL THE NOTES THEY WANT
-
+                DefineKempulNotes();
                 //OPTION TO TURN ON ALTERNATIVE BONANG PATTERNS
                 Console.WriteLine("Under construction.");
                 cont = true; //DELETE THIS AFTERWARDS
@@ -613,47 +613,37 @@ for (int i = 0; i < (noteCounter * 2); i++)
 }
 kempulPartDados[(noteCounter * 2) - 1] = 'G';
 
-string userIrama = "tanggung";
-bool userIramaValid = false;
+Console.WriteLine("\nYour parts have been generated! Please select one of the following options:\nenter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)\nenter \"5\" to transpose the balungan\nenter \"6\" to exit the application\n");
 
-Console.WriteLine("\nYour parts have been generated! Please select one of the following options: enter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)\nenter \"5\" to transpose the balungan\n");
+bool exit = false;
 
-//MAKE EVERYTHING BELOW A DOWHILE LOOP
-
-//SELECTING SPECIFIC PARTS
-//GetUserParts();
-//USE string chosenParts[] TO STORE USER INPUT AND DETERMINE WHICH PARTS ARE TO BE GENERATED
-//PRINT ALL PARTS BY DEFAULT
-//FOR PRINTING PARTS: PUT THE NAMES OF THE PARTS IN AN ARRAY AND DO A FOR LOOP OF THE METHOD SOMEHOW?
-
-int[] chosenParts = { 1, 1, 1, 1, 1, 1 }; //maybe make this string/2 dimensional to include instrument names?
-
-/*
 do
 {
+    string userIrama = "";
+    bool[,] chosenParts = { { true, true }, { true, true }, { true, true }, { true, true }, { true, true }, { true, true } };
     string? menuInput = Console.ReadLine();
     if (menuInput != null)
     {
         menuInput = menuInput.Trim();
         switch (menuInput)
         {
-            case 1:
+            case "1":
                 userIrama = "tanggung";
                 break;
-            case 2:
+            case "2":
                 userIrama = "dados";
                 break;
-            case 3:
+            case "3":
                 userIrama = "both";
                 break;
-            case 4:
-                //set userIrama to "both"
-                //ask for user input to get which parts to generate (store in chosenParts[])
+            case "4":
+                userIrama = "both";
+                GetUserParts();
                 break;
-            case 5:
+            case "5":
                 if (chosenPathet[0] != '2' && chosenPathet[0] != '5' && CheckNoteFour(userInputArr, chosenPathet))
                 {
-                    TransposeBalungan(userInputArr); 
+                    TransposeBalungan(userInputArr);
                     //THIS ISN'T DONE YET
                     //userLaras, chosenLaras, userPathet and chosenPathet ALL need to change! 
                     //Have specific methods to change the strings according to TransposeBalungan
@@ -666,126 +656,140 @@ do
                     Console.WriteLine($"Sorry but this option is currently only available for balungan in pathet slendro manyura, slendro sanga, pelog barang, and pelog nem while note 4 is absent.");
                 }
                 break;
+            case "6":
+                exit = true;
+                break;
         }
     }
-    
-    if (userIrama = "tanggung" || userIrama = "both")
+
+    if (userIrama == "tanggung" || userIrama == "both")
     {
-        //for each part, check chosenParts[]
-    }
+        Console.WriteLine("\nDisplaying parts in irama tanggung\n");
 
-}while(!exit)
-*/
-
-
-
-do
-{
-    string? iramaInput = Console.ReadLine();
-    if (iramaInput != null)
-    {
-        iramaInput = iramaInput.Trim();
-        try
+        if (chosenParts[0, 0])
         {
-            userIrama = GetUserIrama(iramaInput);
-            userIramaValid = true;
+            Console.WriteLine("\n\nBonang Panerus:");
+            Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartTanggung[1]}{bonangPanerusPartTanggung[2]}{bonangPanerusPartTanggung[3]})");
+            Console.Write("\t");
+            DisplayPart(bonangPanerusPartTanggung, 16);
         }
-        catch (Exception ex)
+
+        if (chosenParts[1, 0])
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine("\n\nBonang Barung:");
+            if (userInputArr[0] != '0')
+                Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[0]})");
+            else if (userInputArr[0] == '0')
+                Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]})");
+            Console.Write("\t");
+            DisplayPart(bonangBarungPartTanggung, 8);
+        }
+
+        if (chosenParts[2, 0])
+        {
+            Console.WriteLine("\n\nPeking:");
+            Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]}) ");
+            DisplayPart(pekingPartTanggung, 8);
+        }
+
+        if (chosenParts[3, 0])
+        {
+            Console.WriteLine("\n\nSaron and Slenthem:");
+            Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
+            DisplayPart(saronSlenthemPartTanggung, 4);
+        }
+
+        if (chosenParts[4, 0])
+        {
+            Console.WriteLine("\n\nKenong:");
+            Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
+            DisplayPart(kenongPartTanggung, 4);
+        }
+
+        if (chosenParts[5, 0])
+        {
+            Console.WriteLine("\n\nKempul:");
+            Console.Write($" (Gong) ");
+            DisplayPart(kempulPartTanggung, 4);
         }
     }
-    else
+
+    if (userIrama == "dados" || userIrama == "both")
     {
-        Console.WriteLine("\nPlease choose the irama of the parts you would like the application to display: enter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)");
+        Console.WriteLine("\n\n\nDisplaying parts in irama dados\n");
+
+        if (chosenParts[0, 1])
+        {
+            Console.WriteLine("\n\nBonang Panerus:");
+            Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartDados[1]}{bonangPanerusPartDados[2]}{bonangPanerusPartDados[3]})");
+            Console.Write("\t");
+            DisplayPart(bonangPanerusPartDados, 16);
+        }
+
+        if (chosenParts[1, 1])
+        {
+            Console.WriteLine("\n\nBonang Barung:");
+            if (userInputArr[0] != '0')
+                Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[0]})");
+            else if (userInputArr[0] == '0')
+                Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]})");
+            Console.Write("\t");
+            DisplayPart(bonangBarungPartDados, 8);
+        }
+
+        if (chosenParts[2, 1])
+        {
+            Console.WriteLine("\n\nPeking:");
+            Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]}) ");
+            DisplayPart(pekingPartDados, 8);
+        }
+
+        if (chosenParts[3, 1])
+        {
+            Console.WriteLine("\n\nSaron and Slenthem:");
+            Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
+            DisplayPart(saronSlenthemPartDados, 4);
+        }
+
+        if (chosenParts[4, 1])
+        {
+            Console.WriteLine("\n\nKenong:");
+            Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
+            DisplayPart(kenongPartDados, 4);
+        }
+
+        if (chosenParts[5, 1])
+        {
+            Console.WriteLine("\n\nKempul:");
+            Console.Write($" (Gong) ");
+            DisplayPart(kempulPartDados, 4);
+        }
+
+        Console.WriteLine("\n\nParts displayed in irama dados are written in the same time-frame as tanggung to illustrate the difference between the two - each four-note gatra takes up eight notes of space (two gatras).\n");
     }
-} while (userIramaValid == false);
-if (userIrama == "both")
-    Console.WriteLine($"You have chosen to display both irama tanggung and irama dados.");
-else
-    Console.WriteLine($"You have chosen to display irama {userIrama}.\n");
+
+    Console.WriteLine("\nPlease select one of the following options:\nenter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)\nenter \"5\" to transpose the balungan\nenter \"6\" to exit the application\n");
+
+} while (!exit);
 
 Console.WriteLine($"The output below contains generated representative parts for your balungan in laras {userLaras} pathet {userPathet}:\n");
 DisplayBalungan(userInputArr);
 
-Console.WriteLine($"\n\nNote - the instruments interpret the balungan as a ladrang, regardless of the length. (MOVE THIS NOTE WHERE?)\n");
 
-if (userIrama == "tanggung" || userIrama == "both")
-{
-    Console.WriteLine("\nDisplaying parts in irama tanggung\n");
 
-    Console.WriteLine("\n\nBonang Panerus:");
-    Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartTanggung[1]}{bonangPanerusPartTanggung[2]}{bonangPanerusPartTanggung[3]})");
-    Console.Write("\t");
-    DisplayPart(bonangPanerusPartTanggung, 16);
 
-    Console.WriteLine("\n\nBonang Barung:");
-    if (userInputArr[0] != '0')
-        Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[0]})");
-    else if (userInputArr[0] == '0')
-        Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]})");
-    Console.Write("\t");
-    DisplayPart(bonangBarungPartTanggung, 8);
-
-    Console.WriteLine("\n\nPeking:");
-    Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]}) ");
-    DisplayPart(pekingPartTanggung, 8);
-
-    Console.WriteLine("\n\nSaron and Slenthem:");
-    Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
-    DisplayPart(saronSlenthemPartTanggung, 4);
-
-    Console.WriteLine("\n\nKenong:");
-    Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
-    DisplayPart(kenongPartTanggung, 4);
-
-    Console.WriteLine("\n\nKempul:");
-    Console.Write($" (Gong) ");
-    DisplayPart(kempulPartTanggung, 4);
-}
-
-if (userIrama == "dados" || userIrama == "both")
-{
-    Console.WriteLine("\n\n\nDisplaying parts in irama dados\n");
-
-    Console.WriteLine("\n\nBonang Panerus:");
-    Console.Write($" ({userInputArr[noteCounter - 1]}{bonangPanerusPartDados[1]}{bonangPanerusPartDados[2]}{bonangPanerusPartDados[3]})");
-    Console.Write("\t");
-    DisplayPart(bonangPanerusPartDados, 16);
-
-    Console.WriteLine("\n\nBonang Barung:");
-    if (userInputArr[0] != '0')
-        Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[0]})");
-    else if (userInputArr[0] == '0')
-        Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]})");
-    Console.Write("\t");
-    DisplayPart(bonangBarungPartDados, 8);
-
-    Console.WriteLine("\n\nPeking:");
-    Console.Write($"   ({userInputArr[noteCounter - 1]}{userInputArr[noteCounter - 1]}) ");
-    DisplayPart(pekingPartDados, 8);
-
-    Console.WriteLine("\n\nSaron and Slenthem:");
-    Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
-    DisplayPart(saronSlenthemPartDados, 4);
-
-    Console.WriteLine("\n\nKenong:");
-    Console.Write($"    ({userInputArr[noteCounter - 1]}) ");
-    DisplayPart(kenongPartDados, 4);
-
-    Console.WriteLine("\n\nKempul:");
-    Console.Write($" (Gong) ");
-    DisplayPart(kempulPartDados, 4);
-
-    Console.WriteLine("\n\nParts displayed in irama dados are written in the same time-frame as tanggung to illustrate the difference between the two - each four-note gatra takes up eight notes of space (two gatras).\n");
-}
 
 Console.WriteLine("\n\nSome considerations: Peking ...(different styles of playing, note above/below rule on double notes/rests)");
 Console.WriteLine("Bonang...(flowery phrases/octaves, notes in brackets at the start = same as at end)");
 Console.WriteLine("Kempul...(other pitches, usually closely related ones)");
 Console.WriteLine("Displayed notation for dados... (representative compared with tanggung)");
 Console.WriteLine("Some of the rules in pelog, particularly around note 4, are not present.");
+Console.WriteLine("Note - the instruments interpret the balungan as a ladrang, regardless of the length.");
 
+void DefineKempulNotes()
+{
+    Console.WriteLine("Under Construction");
+}
 
 string GetUserLaras(string input)
 {
@@ -975,31 +979,6 @@ bool CheckNoteFour(char[] balungan, char[] pathet)
     return false;
 }
 
-void GetUserParts()
-{
-    Console.WriteLine("Under Construction");
-}
-
-void DefineKempulNotes()
-{
-    Console.WriteLine("Under Construction");
-}
-
-string GetUserIrama(string input)
-{
-    switch (input)
-    {
-        case "1":
-            return "tanggung";
-        case "2":
-            return "dados";
-        case "3":
-            return "both";
-        default:
-            throw new ArgumentException($"Sorry but \"{input}\" is not a valid option. Please choose a valid irama: enter \"1\" for irama tanggung or \"2\" for irama dados.\n");
-    }
-}
-
 void DisplayBalungan(char[] balungan)
 {
     foreach (char ch in balungan)
@@ -1150,6 +1129,12 @@ void GenerateDadosNotesLowInst(char[] partTanggung, char[] partDados, int index)
         partDados[index] = '0';
     else if ((index + 1) % 2 == 0)
         partDados[index] = partTanggung[((index + 1) / 2) - 1];
+}
+
+void GetUserParts()
+{
+    //ASK FOR 1-6 FROM USER FOR EACH IRAMA, (USE CONTAINS()), SET THE REST TO FALSE
+    Console.WriteLine("Under Construction");
 }
 
 void DisplayPart(char[] part, int notesPerGatra)
