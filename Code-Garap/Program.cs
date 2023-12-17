@@ -768,16 +768,10 @@ do
         Console.WriteLine("\n\nParts displayed in irama dados are written in the same time-frame as tanggung to illustrate the difference between the two - each four-note gatra takes up eight notes of space (two gatras).\n");
     }
 
-    Console.WriteLine("\nPlease select one of the following options:\nenter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)\nenter \"5\" to transpose the balungan\nenter \"6\" to exit the application\n");
-
+    Console.WriteLine($"\n\n\nYour balungan (in laras {userLaras} pathet {userPathet}):\n");
+    DisplayBalungan(userInputArr);
+    Console.WriteLine("\n\nPlease select one of the following options:\nenter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)\nenter \"5\" to transpose the balungan\nenter \"6\" to exit the application\n");
 } while (!exit);
-
-Console.WriteLine($"The output below contains generated representative parts for your balungan in laras {userLaras} pathet {userPathet}:\n");
-DisplayBalungan(userInputArr);
-
-
-
-
 
 Console.WriteLine("\n\nSome considerations: Peking ...(different styles of playing, note above/below rule on double notes/rests)");
 Console.WriteLine("Bonang...(flowery phrases/octaves, notes in brackets at the start = same as at end)");
@@ -1150,16 +1144,21 @@ bool[,] GetUserParts()
 int[] GetUserPartsInput(string irama)
 {
     int[] userPartsArray;
-    Console.WriteLine($"Please enter which specific parts you would like to be displayed for irama {irama}:\nenter \"1\" for bonang panerus\nenter \"2\" for bonang barung\nenter \"3\" for peking\nenter \"4\" for saron/slenthem\nenter \"5\" for kenong\nenter \"6\" for kempul\n");
+    Console.WriteLine($"Please enter any number of specific parts you would like to be displayed for irama {irama} (please enter a string of numbers):\nenter \"1\" for bonang panerus\nenter \"2\" for bonang barung\nenter \"3\" for peking\nenter \"4\" for saron/slenthem\nenter \"5\" for kenong\nenter \"6\" for kempul\n");
     do
     {
         string? userParts = Console.ReadLine();
-        if (userParts != null && int.TryParse(userParts, out int result))
+        if (userParts != null)
         {
-            userPartsArray = result.ToString().Select(o => Convert.ToInt32(o) - 48).ToArray();
-            return userPartsArray;
+            userParts = userParts.Trim().Replace(" ", "");
+            if (int.TryParse(userParts, out int result))
+            {
+                userPartsArray = result.ToString().Select(o => Convert.ToInt32(o) - 48).ToArray();
+                return userPartsArray;
+            }
         }
-        Console.WriteLine($"Please enter which specific parts you would like to be displayed for irama {irama}:\nenter \"1\" for bonang panerus\nenter \"2\" for bonang barung\nenter \"3\" for peking\nenter \"4\" for saron/slenthem\nenter \"5\" for kenong\nenter \"6\" for kempul\n");
+        //Could be changed to an exception in the future
+        Console.WriteLine($"Invalid entry. Please enter any number of specific parts you would like to be displayed for irama {irama} (please enter a string of numbers):\nenter \"1\" for bonang panerus\nenter \"2\" for bonang barung\nenter \"3\" for peking\nenter \"4\" for saron/slenthem\nenter \"5\" for kenong\nenter \"6\" for kempul\n");
     } while (true);
 }
 
