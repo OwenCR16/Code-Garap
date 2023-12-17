@@ -2,7 +2,7 @@
 
 //TEST BALUNGAN:
 // LADRANG PANKUR - SLENDRO MANYURA (CAN BE PUT IN OTHER PATHET/LARAS) - 3231 3216 1632 5321 3532 6532 5321 3216
-// GAMBIR SAWIT - SLENDRO SANGA - 0352 0356 2200 2321 0032 0126 2200 2321 0032 0165 0056 1653 0023 5321 6532 0165
+// GAMBIR SAWIT - SLENDRO SANGA - 0352 0356 2200 2321 0032 0126 2200 2321 0032 0165 0056 1653 2203 5321 3532 0165
 
 //TODO
 //ADD OPTION TO REMOVE CHECKSELEH
@@ -46,9 +46,11 @@ do
                 cont = true;
                 break;
             case "2":
-                //Options(); 
+                //DisplayOptions(); 
                 //CHECKSELEHTRUE IS OFF BY DEFAULT, OPTION TO TURN IT ON
-                //OPTION TO TURN ON LIMITED KEMPUL PITCHES
+                //OPTION TO DEFINE LIMITED KEMPUL PITCHES IN AN ARRAY:
+                //USE ARRAYS AVAILABLE KEMPUL NOTES LIKE THE LARAS ARRAYS (ONE FOR SLENDRO AND ONE FOR PELOG) AND ASK THE USER TO LIST ALL THE NOTES THEY WANT
+
                 //OPTION TO TURN ON ALTERNATIVE BONANG PATTERNS
                 Console.WriteLine("Under construction.");
                 cont = true; //DELETE THIS AFTERWARDS
@@ -60,7 +62,7 @@ do
             default:
                 Console.WriteLine("Invalid entry. Please enter \"1\" to begin the application, enter \"2\" to change options, or enter \"3\" to exit.");
                 break;
-        }   
+        }
     }
     else
         Console.WriteLine("\nMenu: enter \"1\" to begin the application, enter \"2\" to change options, or enter \"3\" to exit.");
@@ -135,7 +137,7 @@ bool userInputValid = false;
 do
 {
     Console.WriteLine($"Please enter a 4, 8, or 16 gatra balungan in {userLaras} {userPathet}.\nYou may use spaces between gatra or anywhere you like. Please use \"-\" or \"0\" to depict a rest.\n");
-    
+
     if (checkSelehTrue)
         Console.WriteLine($"Tip: For {userLaras} {userPathet}, the \"strong note\" (which should be the final seleh) is {chosenPathet[0]}.\n");
 
@@ -189,64 +191,6 @@ do
 NoteFourWarning(userInputArr, chosenPathet);
 
 int displayCounter = 0;
-int[] chosenParts = { 1, 1, 1, 1, 1, 1 }; //maybe make this string/2 dimensional to include instrument names?
-bool userExit = false;
-//testing stuff: set the below to true to use the menu system
-bool menuActive = false;
-
-if (menuActive)
-{
-    do
-    {
-        Console.WriteLine("Please select one of the following options to customise the output:");
-        string? userOption = Console.ReadLine();
-        if (userOption != null)
-        {
-            switch (userOption)
-            {
-                case "1":
-                    Console.WriteLine("Sorry, but this function is unfinished. Irama tanggung is the default option.");
-                    //userIrama = GetUserIrama(); this will be the same code as the original irama stuff
-                    break;
-                case "2":
-                    GetUserParts();
-                    //USE chosenParts[] TO STORE USER INPUT AND DETERMINE WHICH PARTS ARE TO BE GENERATED
-                    //PRINT ALL PARTS BY DEFAULT
-                    //FOR PRINTING PARTS: PUT THE NAMES OF THE PARTS IN AN ARRAY AND DO A FOR LOOP OF THE METHOD SOMEHOW?
-                    break;
-                case "3":
-                    ChangeKempulNotes();
-                    //USE ARRAYS AVAILABLE KEMPUL NOTES LIKE THE LARAS ARRAYS (ONE FOR SLENDRO AND ONE FOR PELOG) AND ASK THE USER TO LIST ALL THE NOTES THEY WANT
-                    //(ALL AVAILABLE BY DEFAULT EXCEPT PELOG 4, ALLOW USER TO ENTER THE RANGE AVAILABLE ACCORDING TO THE LARAS OF THEIR BALUNGAN)
-                    break;
-                case "4":
-                    if (chosenPathet[0] != '2' && chosenPathet[0] != '5' && CheckNoteFour(userInputArr, chosenPathet))
-                    {
-                        TransposeBalungan(userInputArr); //THIS ISN'T DONE YET
-                                                         //userLaras, chosenLaras, userPathet and chosenPathet ALL need to change! 
-                                                         //Have specific methods to change the strings according to TransposeBalungan
-                                                         //e.g. ChangeUserLaras(); and ChangeUserPathet(); which output strings? (would this work scoped in the dowhile loop?)
-                        Console.WriteLine($"Displayed below is your balungan, now transposed to laras {userLaras} pathet {userPathet}.");
-                        DisplayBalungan(userInputArr);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Sorry but this option is currently only available for balungan in pathet slendro manyura, slendro sanga, pelog barang, and pelog nem while note 4 is absent.");
-                    }
-                    break;
-                case "5":
-                    //ASK DAN HOW TO DO THIS/TO PUT GENERATION IN A SEPARATE FILE
-                    Console.WriteLine("For now, use option 6 to do this (which will also generate the parts).");
-                    break;
-                case "6":
-                    userExit = true;
-                    break;
-
-            }
-        }
-    } while (!userExit);
-}
-
 char[] pekingPartTanggung = new char[noteCounter * 2];
 char[] bonangPanerusPartTanggung = new char[noteCounter * 4];
 char[] bonangBarungPartTanggung = new char[noteCounter * 2];
@@ -672,7 +616,68 @@ kempulPartDados[(noteCounter * 2) - 1] = 'G';
 string userIrama = "tanggung";
 bool userIramaValid = false;
 
-Console.WriteLine("\nYour parts have been generated! Please choose the irama of the parts you would like to display: enter \"1\" for irama tanggung, \"2\" for irama dados, or \"3\" to display both.\n");
+Console.WriteLine("\nYour parts have been generated! Please select one of the following options: enter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)\nenter \"5\" to transpose the balungan\n");
+
+//MAKE EVERYTHING BELOW A DOWHILE LOOP
+
+//SELECTING SPECIFIC PARTS
+//GetUserParts();
+//USE string chosenParts[] TO STORE USER INPUT AND DETERMINE WHICH PARTS ARE TO BE GENERATED
+//PRINT ALL PARTS BY DEFAULT
+//FOR PRINTING PARTS: PUT THE NAMES OF THE PARTS IN AN ARRAY AND DO A FOR LOOP OF THE METHOD SOMEHOW?
+
+int[] chosenParts = { 1, 1, 1, 1, 1, 1 }; //maybe make this string/2 dimensional to include instrument names?
+
+/*
+do
+{
+    string? menuInput = Console.ReadLine();
+    if (menuInput != null)
+    {
+        menuInput = menuInput.Trim();
+        switch (menuInput)
+        {
+            case 1:
+                userIrama = "tanggung";
+                break;
+            case 2:
+                userIrama = "dados";
+                break;
+            case 3:
+                userIrama = "both";
+                break;
+            case 4:
+                //set userIrama to "both"
+                //ask for user input to get which parts to generate (store in chosenParts[])
+                break;
+            case 5:
+                if (chosenPathet[0] != '2' && chosenPathet[0] != '5' && CheckNoteFour(userInputArr, chosenPathet))
+                {
+                    TransposeBalungan(userInputArr); 
+                    //THIS ISN'T DONE YET
+                    //userLaras, chosenLaras, userPathet and chosenPathet ALL need to change! 
+                    //Have specific methods to change the strings according to TransposeBalungan
+                    //e.g. ChangeUserLaras(); and ChangeUserPathet(); which output strings? (would this work scoped in the dowhile loop?)
+                    Console.WriteLine($"Displayed below is your balungan, now transposed to laras {userLaras} pathet {userPathet}.");
+                    DisplayBalungan(userInputArr);
+                }
+                else
+                {
+                    Console.WriteLine($"Sorry but this option is currently only available for balungan in pathet slendro manyura, slendro sanga, pelog barang, and pelog nem while note 4 is absent.");
+                }
+                break;
+        }
+    }
+    
+    if (userIrama = "tanggung" || userIrama = "both")
+    {
+        //for each part, check chosenParts[]
+    }
+
+}while(!exit)
+*/
+
+
 
 do
 {
@@ -692,7 +697,7 @@ do
     }
     else
     {
-        Console.WriteLine("\nPlease choose the irama you would like the application to generate the parts in: enter \"1\" for irama tanggung or \"2\" for irama dados.\n");
+        Console.WriteLine("\nPlease choose the irama of the parts you would like the application to display: enter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)");
     }
 } while (userIramaValid == false);
 if (userIrama == "both")
@@ -975,7 +980,7 @@ void GetUserParts()
     Console.WriteLine("Under Construction");
 }
 
-void ChangeKempulNotes()
+void DefineKempulNotes()
 {
     Console.WriteLine("Under Construction");
 }
