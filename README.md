@@ -3,7 +3,7 @@
 *Note: This project is in the early stages of construction as of late 2023!*
 
 ## Description
-This project illustrates through code how a *balungan* (melody) might be interpreted by a Javanese Gamelan. It's main intended use is for educational purposes (for learning about both Javanese Gamelan and the C# language), but may also serve a use for composers to quickly visualise or find potential issues within a *balungan*.
+This project illustrates through code how a *balungan* (melody) might be interpreted by a Javanese Gamelan. It is mainly intended for educational purposes (to learn about both Javanese Gamelan and the C# language), but may also serve a use for composers who want to quickly realise a *balungan's* interpretation, or find potential issues.
 
 **Disclaimer: This program only serves as a demonstration. It does not provide a replacement for a real player's *garap* (interpretation), which contains a level of depth that lies outside the scope of said demonstration.**
 
@@ -16,12 +16,13 @@ The program asks the user to input a *balungan* with various details such as the
 + Kempul
 
 Other features include:
-+ Transposition of the user-defined *balungan* into different a different *laras* and *pathet*
++ Transposition of the user-defined *balungan* into different a different *laras* and/or *pathet*
 + The display of specific parts from either irama
 
-Future features are in development, such as:
+More features are in development, such as:
 + Using a limited number of kempul for smaller gamelans
 + Using alternative bonang patterns
++ Using different colotomic structures (currently the application interprets everything as a *ladrang* or similar)
 + Moving from a console application to a web application
 
 ## How to use
