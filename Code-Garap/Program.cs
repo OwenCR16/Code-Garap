@@ -638,7 +638,7 @@ do
                 break;
             case "4":
                 userIrama = "both";
-                GetUserParts();
+                chosenParts = GetUserParts();
                 break;
             case "5":
                 if (chosenPathet[0] != '2' && chosenPathet[0] != '5' && CheckNoteFour(userInputArr, chosenPathet))
@@ -653,7 +653,7 @@ do
                 }
                 else
                 {
-                    Console.WriteLine($"Sorry but this option is currently only available for balungan in pathet slendro manyura, slendro sanga, pelog barang, and pelog nem while note 4 is absent.");
+                    Console.WriteLine($"Sorry but this option is currently only available for balungan in pathet slendro manyura, slendro sanga, pelog barang, and pelog nem(OR LIMA? HAVE I GOT THE WRONG PATHET?) while note 4 is absent.");
                 }
                 break;
             case "6":
@@ -1131,10 +1131,36 @@ void GenerateDadosNotesLowInst(char[] partTanggung, char[] partDados, int index)
         partDados[index] = partTanggung[((index + 1) / 2) - 1];
 }
 
-void GetUserParts()
+bool[,] GetUserParts()
 {
-    //ASK FOR 1-6 FROM USER FOR EACH IRAMA, (USE CONTAINS()), SET THE REST TO FALSE
-    Console.WriteLine("Under Construction");
+    int[] userPartsTanggung = GetUserPartsInput("tanggung");
+    int[] userPartsDados = GetUserPartsInput("dados");
+    bool[,] userPartsOut = { { true, true }, { true, true }, { true, true }, { true, true }, { true, true }, { true, true } };
+
+    for (int j = 1; j < 7; j++)
+    {
+        if (!userPartsTanggung.Contains(j))
+            userPartsOut[j - 1, 0] = false;
+        if (!userPartsDados.Contains(j))
+            userPartsOut[j - 1, 1] = false;
+    }
+    return userPartsOut;
+}
+
+int[] GetUserPartsInput(string irama)
+{
+    int[] userPartsArray;
+    Console.WriteLine($"Please enter which specific parts you would like to be displayed for irama {irama}:\nenter \"1\" for bonang panerus\nenter \"2\" for bonang barung\nenter \"3\" for peking\nenter \"4\" for saron/slenthem\nenter \"5\" for kenong\nenter \"6\" for kempul\n");
+    do
+    {
+        string? userParts = Console.ReadLine();
+        if (userParts != null && int.TryParse(userParts, out int result))
+        {
+            userPartsArray = result.ToString().Select(o => Convert.ToInt32(o) - 48).ToArray();
+            return userPartsArray;
+        }
+        Console.WriteLine($"Please enter which specific parts you would like to be displayed for irama {irama}:\nenter \"1\" for bonang panerus\nenter \"2\" for bonang barung\nenter \"3\" for peking\nenter \"4\" for saron/slenthem\nenter \"5\" for kenong\nenter \"6\" for kempul\n");
+    } while (true);
 }
 
 void DisplayPart(char[] part, int notesPerGatra)
