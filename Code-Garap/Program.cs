@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 //TEST BALUNGAN:
 // LADRANG PANKUR - SLENDRO MANYURA (CAN BE PUT IN OTHER PATHET/LARAS) - 3231 3216 1632 5321 3532 6532 5321 3216
@@ -32,7 +33,7 @@ Console.WriteLine("\nHello! This program generates a basic literal representatio
 //OPTIONS MENU HERE
 bool checkSelehTrue = false;
 bool cont = false;
-Console.WriteLine("\nMenu: enter \"1\" to begin the application, enter \"2\" to change options, or enter \"3\" to exit.");
+Console.WriteLine("\nMenu: enter \"1\" to begin the application, enter \"2\" to change options, or enter \"3\" to exit.\n");
 do
 {
     string? firstInput = Console.ReadLine();
@@ -65,7 +66,7 @@ do
         }
     }
     else
-        Console.WriteLine("\nMenu: enter \"1\" to begin the application, enter \"2\" to change options, or enter \"3\" to exit.");
+        Console.WriteLine("\nMenu: enter \"1\" to begin the application, enter \"2\" to change options, or enter \"3\" to exit.\n");
 } while (!cont);
 
 Console.WriteLine("Firstly, please choose the laras of your balungan: enter \"1\" for slendro or \"2\" for pelog.\n");
@@ -614,7 +615,7 @@ for (int i = 0; i < (noteCounter * 2); i++)
 }
 kempulPartDados[(noteCounter * 2) - 1] = 'G';
 
-Console.WriteLine("\nYour parts have been generated! Please select one of the following options:\nenter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)\nenter \"5\" to transpose the balungan\nenter \"6\" to exit the application\n");
+Console.WriteLine("\nYour parts have been generated! Please select one of the following options:\nenter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts\nenter \"5\" to transpose your balungan\nenter \"6\" to exit the application\n");
 
 bool exit = false;
 
@@ -642,20 +643,15 @@ do
                 chosenParts = GetUserParts();
                 break;
             case "5":
-                if (chosenPathet[0] != '2' && chosenPathet[0] != '5' && CheckNoteFour(userInputArr, chosenPathet))
+                if (chosenPathet != pathetPelogLima && chosenPathet != pathetPelogNem)
                 {
-                    TransposeBalungan(userInputArr);
-                    //THIS ISN'T DONE YET
-                    //userLaras, chosenLaras, userPathet and chosenPathet ALL need to change! 
-                    //Have specific methods to change the strings according to TransposeBalungan
-                    //e.g. ChangeUserLaras(); and ChangeUserPathet(); which output strings? (would this work scoped in the dowhile loop?)
-                    Console.WriteLine($"Displayed below is your balungan, now transposed to laras {userLaras} pathet {userPathet}.");
-                    DisplayBalungan(userInputArr);
+                    TransposeBalungan();
+                    userLaras = UpdateUserLaras();
+                    userPathet = UpdateUserPathet();
+                    Console.WriteLine($"Your balungan has been transposed to laras {userLaras} pathet {userPathet}.");
                 }
                 else
-                {
-                    Console.WriteLine($"Sorry but this option is currently only available for balungan in pathet slendro manyura, slendro sanga, pelog barang, and pelog nem(OR LIMA? HAVE I GOT THE WRONG PATHET?) while note 4 is absent.");
-                }
+                    Console.WriteLine($"Sorry but this option is currently only available for balungan in laras slendro pathet manyura/sanga, and laras pelog pathet barang.");
                 break;
             case "6":
                 exit = true;
@@ -769,9 +765,9 @@ do
         Console.WriteLine("\n\nParts displayed in irama dados are written in the same time-frame as tanggung to illustrate the difference between the two - each four-note gatra takes up eight notes of space (two gatras).\n");
     }
 
-    Console.WriteLine($"\n\n\nYour balungan (in laras {userLaras} pathet {userPathet}):\n");
+    Console.WriteLine($"\n\nYour balungan (in laras {userLaras} pathet {userPathet}):\n");
     DisplayBalungan(userInputArr);
-    Console.WriteLine("\n\nPlease select one of the following options:\nenter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts (under construction)\nenter \"5\" to transpose the balungan\nenter \"6\" to exit the application\n");
+    Console.WriteLine("\n\nPlease select one of the following options:\nenter \"1\" to display all parts in irama tanggung\nenter \"2\" to display all parts in irama dados\nenter \"3\" to display all parts in both iramas\nenter \"4\" to display a selection of parts\nenter \"5\" to transpose your balungan\nenter \"6\" to exit the application\n");
 } while (!exit);
 
 Console.WriteLine("\n\nSome considerations: Peking ...(different styles of playing, note above/below rule on double notes/rests)");
@@ -1155,10 +1151,127 @@ int[] GetUserPartsInput(string irama)
     } while (true);
 }
 
-void TransposeBalungan(char[] balungan)
+void TransposeBalungan()
 {
-    Console.WriteLine("UNDER CONSTRUCTION");
-    //(OPTIONS: MANYURA/SANGA/BARANG/NEM(IGNORING NOTE 4/NOT AVAILABLE IF SO) - FIRST CHECK IF THE USER BALUNGAN IS VIABLE)
+    Console.WriteLine("Please select which laras/pathet you wish to transpose your balungan and parts to:\nenter \"1\" for slendro manyura\nenter \"2\" for slendro sanga\nenter \"3\" for pelog barang\nenter \"4\" for pelog nem/lima (under construction - dev note: which? one of them might be ok)");
+    do
+    {
+        string? transInput = Console.ReadLine();
+        if (transInput != null)
+        {
+            transInput = transInput.Trim();
+            switch (transInput)
+            {
+                case "1":
+                    if (chosenPathet != pathetSlendroManyura)
+                    {
+                        TransposeAllParts(chosenPathet, pathetSlendroManyura);
+                        chosenLaras = larasSlendro;
+                        chosenPathet = pathetSlendroManyura;
+                        return;
+                    }
+                    else
+                        Console.WriteLine($"Your balungan is already in pathet {userPathet}!\n");
+                    return;
+                case "2":
+                    if (chosenPathet != pathetSlendroSanga)
+                    {
+                        TransposeAllParts(chosenPathet, pathetSlendroSanga);
+                        chosenLaras = larasSlendro;
+                        chosenPathet = pathetSlendroSanga;
+                        return;
+                    }
+                    else
+                        Console.WriteLine($"Your balungan is already in pathet {userPathet}!\n");
+                    return;
+                case "3":
+                    if (chosenPathet != pathetPelogBarang)
+                    {
+                        TransposeAllParts(chosenPathet, pathetPelogBarang);
+                        chosenLaras = larasPelog;
+                        chosenPathet = pathetPelogBarang;
+                        return;
+                    }
+                    else
+                        Console.WriteLine($"Your balungan is already in pathet {userPathet}!\n");
+                    return;
+                case "4":
+                    Console.WriteLine("Under construction. Your balungan has not been transposed.");
+                    return;
+                default:
+                    Console.WriteLine("Invalid entry.");
+                    break;
+            }
+        }
+        Console.WriteLine("Please select which laras/pathet you wish to transpose your balungan and parts to:\nenter \"1\" for slendro manyura\nenter \"2\" for slendro sanga\nenter \"3\" for pelog barang\nenter \"4\" for pelog nem(OR LIMA?? WHICH)");
+    } while (true);
+}
+
+void TransposeAllParts(char[] pathetFrom, char[] pathetTo)
+{
+    userInputArr = Transpose(userInputArr, pathetFrom, pathetTo);
+    bonangPanerusPartTanggung = Transpose(bonangPanerusPartTanggung, pathetFrom, pathetTo);
+    bonangPanerusPartDados = Transpose(bonangPanerusPartDados, pathetFrom, pathetTo);
+    bonangBarungPartTanggung = Transpose(bonangBarungPartTanggung, pathetFrom, pathetTo);
+    bonangBarungPartDados = Transpose(bonangBarungPartDados, pathetFrom, pathetTo);
+    pekingPartTanggung = Transpose(pekingPartTanggung, pathetFrom, pathetTo);
+    pekingPartDados = Transpose(pekingPartDados, pathetFrom, pathetTo);
+    //saronSlenthemPartTanggung = Transpose(saronSlenthemPartTanggung, pathetFrom, pathetTo); ***
+    saronSlenthemPartDados = Transpose(saronSlenthemPartDados, pathetFrom, pathetTo);
+    kenongPartTanggung = Transpose(kenongPartTanggung, pathetFrom, pathetTo);
+    kenongPartDados = Transpose(kenongPartDados, pathetFrom, pathetTo);
+    kempulPartTanggung = Transpose(kempulPartTanggung, pathetFrom, pathetTo);
+    kempulPartDados = Transpose(kempulPartDados, pathetFrom, pathetTo);
+    //***Since saronSlenthemPartTanggung = userInputArr (during tanggung generation), they seem to be linked (to do with arrays being ref values?)
+    //***transposing both down means they both go down 2 times which causes a bug - commenting the saron part out seems to fix
+}
+
+char[] Transpose(char[] part, char[] pathetFrom, char[] pathetTo)
+{
+    char[] transPart = part;
+    if (pathetFrom == pathetPelogLima || pathetFrom == pathetPelogNem || pathetTo == pathetPelogLima || pathetTo == pathetPelogNem)
+    {
+        Console.WriteLine("Under Construction, N/A");
+        return part;
+    }
+    for (int j = 0; j < part.Length; j++)
+    {
+        for (int k = 0; k < pathetFrom.Length; k++)
+        {
+            if (part[j] == pathetFrom[k])
+            {
+                transPart[j] = pathetTo[k];
+                break;
+            }
+        }
+    }
+    return transPart;
+}
+
+string UpdateUserLaras()
+{
+    if (chosenLaras == larasSlendro)
+        return "slendro";
+    else
+        return "pelog";
+    //exception handling can be implemented
+}
+
+string UpdateUserPathet()
+{
+    if (chosenPathet == pathetSlendroManyura)
+        return "manyura";
+    else if (chosenPathet == pathetSlendroSanga)
+        return "sanga";
+    else if (chosenPathet == pathetSlendroNem)
+        return "nem";
+    else if (chosenPathet == pathetPelogBarang)
+        return "barang";
+    else if (chosenPathet == pathetPelogNem)
+        return "nem";
+    else
+        return "lima";
+    //exception handling can be implemented
 }
 
 void DisplayPart(char[] part, int notesPerGatra)
