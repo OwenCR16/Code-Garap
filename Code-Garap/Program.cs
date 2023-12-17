@@ -583,7 +583,8 @@ for (int i = 0; i < (noteCounter * 4); i++)
         bonangBarungPartDados[i] = bonangBarungPartTanggung[i];
     else if (i == 5)
     {
-        GenerateDadosNotesHighInst(bonangBarungPartTanggung, bonangBarungPartDados, i, -3, -2, -1, 0.5F, 0);
+        bonangBarungPartDados[i - 3] = bonangBarungPartTanggung[i - 3];
+        bonangBarungPartDados[i - 2] = bonangBarungPartTanggung[i - 4];
         GenerateDadosNotesHighInst(bonangBarungPartTanggung, bonangBarungPartDados, i, -1, 0, -1, 0.5F, -2);
     }
     else if ((i - 1) % 8 == 4 && i > 5 && (i - 1) / 2 < (noteCounter * 2) - 2)
@@ -987,14 +988,6 @@ void DisplayBalungan(char[] balungan)
     }
 }
 
-void TransposeBalungan(char[] balungan)
-{
-    Console.WriteLine("UNDER CONSTRUCTION");
-    //(OPTIONS: MANYURA/SANGA/BARANG/NEM(IGNORING NOTE 4/NOT AVAILABLE IF SO) - FIRST CHECK IF THE USER BALUNGAN IS VIABLE)
-}
-
-//NOTE THAT FOR NOW THESE METHODS AND THEIR NAMES ONLY APPLY TO IRAMA TANGGUNG
-
 char FindPreviousNonZero(int initialIncrementValue)
 {
     for (int j = initialIncrementValue; j >= 0; j--)
@@ -1160,6 +1153,12 @@ int[] GetUserPartsInput(string irama)
         //Could be changed to an exception in the future
         Console.WriteLine($"Invalid entry. Please enter any number of specific parts you would like to be displayed for irama {irama} (please enter a string of numbers):\nenter \"1\" for bonang panerus\nenter \"2\" for bonang barung\nenter \"3\" for peking\nenter \"4\" for saron/slenthem\nenter \"5\" for kenong\nenter \"6\" for kempul\n");
     } while (true);
+}
+
+void TransposeBalungan(char[] balungan)
+{
+    Console.WriteLine("UNDER CONSTRUCTION");
+    //(OPTIONS: MANYURA/SANGA/BARANG/NEM(IGNORING NOTE 4/NOT AVAILABLE IF SO) - FIRST CHECK IF THE USER BALUNGAN IS VIABLE)
 }
 
 void DisplayPart(char[] part, int notesPerGatra)
