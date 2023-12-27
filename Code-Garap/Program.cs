@@ -279,7 +279,7 @@ bonangBarungPartTanggung[(generateCounter * 2) - 2] = userInputArr[noteCounter -
 if (userInputArr[0] != '0')
     bonangBarungPartTanggung[(generateCounter * 2) - 1] = userInputArr[0];
 else if (userInputArr[0] == '0')
-    bonangBarungPartTanggung[(generateCounter * 2) - 1] = chosenPathet[0];
+    bonangBarungPartTanggung[(generateCounter * 2) - 1] = FindPreviousNonZero(noteCounter - 1);
 
 //PEKING GENERATION
 //Each note is doubled up in tanggung at twice the speed of the saron/slenthem. The peking plays continuously, including over rests.
@@ -507,6 +507,14 @@ foreach (char note in pekingPartTanggung)
         }
     }
 }
+if (chosenPathet == pathetPelogLima || chosenPathet == pathetPelogNem)
+{
+    //ADD AN AMENDMENT HERE FOR PEKING: RULES INVOLVING NOTE 4
+    //E.G. FOR 5565 5456 WOULD MAKE 6655665533445566, SHOULD INSTEAD MAKE 66556655 55445566 (OVERRIDING THE DOUBLE RULE)
+    //THIS WOULDN'T OVERRIDE IF THE BALUNGAN WENT 3->4, BUT WOULD IF THE PEKINGAN MAKES A CHOICE TO GO FOR A LOWER OVER AN UPPER NOTE (OVERRIDE TO 5544)
+    //VICE VERSA FOR 4433 WHEN THE BALUNGAN DOESN'T GO 43 (OVERRIDE TO CHOOSE THE LOWER PAIR OF 2233)
+}
+
 
 //SARON AND SLENTHEM GENERATION
 //Saron and slenthem play the balungan verbatim.
@@ -991,7 +999,7 @@ void DisplayBalungan(char[] balungan)
     }
 }
 
-char FindPreviousNonZero(int initialIncrementValue)
+char FindPreviousNonZero(int initialIncrementValue) //CHANGE THIS TO FIND PREVIOUS NON-ZERO FOR ANY PART?
 {
     for (int j = initialIncrementValue; j >= 0; j--)
     {
